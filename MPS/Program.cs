@@ -22,7 +22,7 @@ namespace MPS
             .UseContentRoot(Directory.GetCurrentDirectory())
             .UseKestrel()
             .UseContentRoot(Directory.GetCurrentDirectory())
-            .UseUrls("https://localhost:5001", "https://192.168.1.132:5001", "http://localhost:5000", "http://localhost:5002", "http://192.168.1.132:5000", "http://192.168.1.132:5002")
+            .UseUrls("https://localhost:5001", "http://localhost:5000", "http://localhost:5002")
             .UseIISIntegration()
             .UseStartup<Startup>();
     }
