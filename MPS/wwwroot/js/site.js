@@ -16,7 +16,8 @@ window.onload = function () {
     snake = new Snake();
     apple = new Apple(15, 15);
 
-    connection = new WebSocketManager.Connection("ws://localhost:5000/server");
+    //connection = new WebSocketManager.Connection("ws://localhost:5000/server");
+    connection = new WebSocketManager.Connection("ws://192.168.1.164:5000/server");
 
     connection.connectionMethods.onConnected = () => {
         snake.id = connection.connectionId;
@@ -41,6 +42,7 @@ window.onload = function () {
 
     setInterval(game, 1000 / 15);
 }
+
 
 
 function Snake() {
