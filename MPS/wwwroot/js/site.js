@@ -548,54 +548,90 @@ const game = {
         })
     }
 }
-
+var player;
+var players = [];
 window.onload = function () {
-    //canv = document.getElementById("gc");
-    //ctx = canv.getContext("2d");
-    //document.addEventListener("keydown", keyPush);
-/*    var g = new game();
-    g.init;*/
-    //map = new Map();
-    //snake = new Snake();
-    //apple = new Apple(15, 15);
+    player = new Player();
+    //Card randomize section
+    let cards = [];
+    for (let i = 0; i < 20; i++) {
+        cards.push(date.carte[Math.floor(Math.random() * date.carte.length)]);
+    }
+    receivedPlayers = cards;
+
 
     game.init();
 
+    //Connection section
     connection = new WebSocketManager.Connection("ws://localhost:5000/server");
 
-    //connection.connectionMethods.onConnected = () => {
-    //    snake.id = connection.connectionId;
-    //    connection.invoke("ConnectedSnake", connection.connectionId, JSON.stringify(snake));
+    connection.connectionMethods.onConnected = () => {
+        player.id = connection.connectionId;
+        connection.invoke("ConnectedPlayer", connection.connectionId, JSON.stringify(player));
 
-    //}
+    }
 
-    //connection.connectionMethods.onDisconnected = () => {
-    //    connection.invoke("DisconnectedSnake", connection.connectionId, "");
-    //}
+    connection.connectionMethods.onDisconnected = () => {
+        connection.invoke("DisconnectedPlayer", connection.connectionId, "");
+    }
 
-    //connection.clientMethods["pingSnakes"] = (sersnakes) => {
-    //    snakes = JSON.parse(sersnakes);
-    //    console.log(snakes);
-    //};
+    connection.clientMethods["pingPlayers"] = (serverPlayers) => {
+        players = JSON.parse(serverPlayers);
+        console.log("received info:");
+        console.log(players);
+    };
 
-    //connection.start();
+    connection.start();
    
-    //$(window).on("unload", function (e) {
-    //    connection.invoke("DisconnectedSnake", connection.connectionId, "");
-    //});
+    $(window).on("unload", function (e) {
+        connection.invoke("DisconnectedPlayer", connection.connectionId, "");
+    });
 
 
     //TODO: create update function that notifies the server of the client changes
     // this function gets called every .5 seconds
-    //setInterval(update, 500);
+    setInterval(update, 500);
 }
-
+function update() {
+    player.test++;
+    if (connection.socket.readyState == 1) {
+        connection.invoke("Update", connection.connectionId, JSON.stringify(player));
+    }
+}
 
 function Player() {
     this.id = "";
-    
+    this.test = 0;
+    this.cards = [];
+    this.powers = [];
+    this.coach = null;
 }
-
+function Card() {
+    this.image = "";
+    this.name = "";
+    this.attack = 0;
+    this.defense = 0;
+    this.fc = "";
+    this.country = "";
+    this.tip = 0;
+    this.pos = 0;
+}
+function Power() {
+    this.image = "";
+    this.name = "";
+    this.description = "";
+    this.tip = 0;
+    this.pos = 0;
+}
+function Coach() {
+    this.image = "";
+    this.name = "";
+    this.description = "";
+    this.active = 0;
+    this.passive = 0;
+    this.descpassive = "";
+    this.descactive = "";
+}
 function keyPush(evt) {
     switch (evt.keyCode) {
         case 37:
@@ -612,3 +648,268 @@ function keyPush(evt) {
             break;
     }
 }
+
+
+var date = {
+    "carte": [
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "adrian mutu",
+            "attack": "5",
+            "defense": "16",
+            "fc": "rapid",
+            "country": "romania",
+            "tip": "0",
+            "pos": "0"
+        },
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "Jordan Pickford",
+            "attack": "2",
+            "defense": "8",
+            "fc": "Everton",
+            "country": "England",
+            "tip": "0",
+            "pos": "0"
+        },
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "Kyle Walker",
+            "attack": "4",
+            "defense": "7",
+            "fc": "Manchester City",
+            "country": "England",
+            "tip": "1",
+            "pos": "0"
+        },
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "Kieran Trippier",
+            "attack": "2",
+            "defense": "8",
+            "fc": "Tottenham Hotspur",
+            "country": "England",
+            "tip": "1",
+            "pos": "0"
+        },
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "John Stones",
+            "attack": "2",
+            "defense": "5",
+            "fc": "Manchester City",
+            "country": "England",
+            "tip": "1",
+            "pos": "0"
+        },
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "Eric Dier",
+            "attack": "3",
+            "defense": "5",
+            "fc": "Tottenham Hotspur",
+            "country": "England",
+            "tip": "2",
+            "pos": "0"
+        },
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "Ross Barkley",
+            "attack": "3",
+            "defense": "6",
+            "fc": "Chelsea",
+            "country": "England",
+            "tip": "2",
+            "pos": "0"
+        },
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "Jordan Henderson",
+            "attack": "4",
+            "defense": "5",
+            "fc": "Liverpool",
+            "country": "England",
+            "tip": "2",
+            "pos": "0"
+        },
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "Harry Winks",
+            "attack": "4",
+            "defense": "4",
+            "fc": "Tottenham Hotspur",
+            "country": "England",
+            "tip": "2",
+            "pos": "0"
+        },
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "Raheem Sterling",
+            "attack": "8",
+            "defense": "2",
+            "fc": "Manchester City",
+            "country": "England",
+            "tip": "3",
+            "pos": "0"
+        },
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "Harry Kane",
+            "attack": "8",
+            "defense": "4",
+            "fc": "Tottenham Hotspur",
+            "country": "England",
+            "tip": "3",
+            "pos": "0"
+        },
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "Marcus Rashford",
+            "attack": "6",
+            "defense": "2",
+            "fc": "Manchester United",
+            "country": "England",
+            "tip": "3",
+            "pos": "0"
+        },
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "Hugo Lloris",
+            "attack": "3",
+            "defense": "8",
+            "fc": "Tottenham Hotspur",
+            "country": "France",
+            "tip": "0",
+            "pos": "0"
+        },
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "Benjamin Pavard",
+            "attack": "2",
+            "defense": "6",
+            "fc": "VfB Stuttgart",
+            "country": "France",
+            "tip": "1",
+            "pos": "0",
+            "": {}
+        },
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "Presnel Kimpembe",
+            "attack": "1",
+            "defense": "7",
+            "fc": "Paris Saint-Germain",
+            "country": "France",
+            "tip": "1",
+            "pos": "0",
+            "": {}
+        },
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "Mamadou Sakho",
+            "attack": "4",
+            "defense": "5",
+            "fc": "Crystal Palace",
+            "country": "France",
+            "tip": "1",
+            "pos": "0",
+            "": {}
+        },
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "Lucas Digne",
+            "attack": "3",
+            "defense": "5",
+            "fc": "Everton",
+            "country": "France",
+            "tip": "1",
+            "pos": "0",
+            "": {}
+        },
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "Lucas Hernández",
+            "attack": "2",
+            "defense": "6",
+            "fc": "Atlético Madrid",
+            "country": "France",
+            "tip": "1",
+            "pos": "0",
+            "": {}
+        },
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "N'Golo Kanté",
+            "attack": "4",
+            "defense": "5",
+            "fc": "Chelsea",
+            "country": "France",
+            "tip": "2",
+            "pos": "0",
+            "": {}
+        },
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "Blaise Matuidi",
+            "attack": "5",
+            "defense": "6",
+            "fc": "Juventus",
+            "country": "France",
+            "tip": "2",
+            "pos": "0",
+            "": {}
+        },
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "Tanguy Ndombele",
+            "attack": "5",
+            "defense": "3",
+            "fc": "Lyon",
+            "country": "France",
+            "tip": "2",
+            "pos": "0",
+            "": {}
+        },
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "Antoine Griezmann",
+            "attack": "7",
+            "defense": "1",
+            "fc": "Atlético Madrid",
+            "country": "France",
+            "tip": "3",
+            "pos": "0",
+            "": {}
+        },
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "Thomas Lemar",
+            "attack": "6",
+            "defense": "4",
+            "fc": "Atlético Madrid",
+            "country": "France",
+            "tip": "3",
+            "pos": "0"
+        }
+    ],
+    "power": [
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "cox",
+            "description": "50$/gr",
+            "tip": "0",
+            "pos": "0"
+        }
+    ],
+    "coach": [
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "hagi",
+            "passive": "0",
+            "descpassive": "ai n-ai mingea dai la poarta",
+            "active": "0",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. In soluta repudiandae odio, provident quod hic harum delectus, sunt voluptatem architecto atque, expedita labore alias sequi.",
+            "descactive": "autogol"
+        }
+    ]
+};
