@@ -677,23 +677,27 @@ window.onload = function () {
 
     //TODO: create update function that notifies the server of the client changes
     // this function gets called every .5 seconds
-    setInterval(() => {
-        player.test++;
-        console.log("update cards");
-        console.log(game.sendCardsFromField());
-        player.cards = game.sendCardsFromField();
-        if (connection.socket.readyState == 1) {
-            connection.invoke("Update", connection.connectionId, JSON.stringify(player));
-        }
-    }, 500);
+    setInterval(update, 500);
 }
+
+//TODO change this function to permit other player updates
+// ConnectionId -> otherPlayer.id; player -> otherPlayer
 function update() {
     player.test++;
-    console.log("update cards");
     player.cards = game.sendCardsFromField();
-    if (connection.socket.readyState == 1) {
-        connection.invoke("Update", connection.connectionId, JSON.stringify(player));
-    }
+    //if (connection.socket.readyState == 1) {
+    //    connection.invoke("Update", connection.connectionId, JSON.stringify(player));
+    //}
+    players.forEach(p => {
+        if (p.id == player.id) {
+            p.cards = player.cards;
+            p.coach = player.coach;
+            //TODO and other update stuff
+        }
+        if (connection.socket.readyState == 1) {
+            connection.invoke("Update", p.id, JSON.stringify(p));
+        }
+    })
 }
 
 function Player() {
@@ -711,6 +715,8 @@ function Card() {
     this.country = "";
     this.tip = 0;
     this.pos = 0;
+    this.description = "";
+
 }
 function Power() {
     this.image = "";
@@ -745,7 +751,29 @@ function keyPush(evt) {
     }
 }
 
-
+function applyPower(players, power) {
+    //Pentru playerul care nu suntem noi se lucreaza cu players.forEach
+    if (power.tip === 0) {
+        players.forEach(
+            p => {
+                if (p.id !== connection.connectionId) {
+                    p.cards.forEach(c => {
+                        if (c.pos === 4) {
+                            c.attack -= 3;
+                        }
+                    });
+                }
+            });
+    }
+    //Pentru playerul curent se lucreaza cu player
+    if (power.tip === 1) {
+        player.cards.forEach(c => {
+            if (c.pos === 4) {
+                c.attack += 3;
+            }
+        });
+    }
+}
 var date = {
     "carte": [
         {

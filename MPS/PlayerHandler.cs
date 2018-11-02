@@ -36,6 +36,8 @@ namespace MPS
             {
                 //TODO: Update logic
                 exists.test = player.test;
+                exists.cards = player.cards;
+                exists.coach = player.coach;
             }
         }
 
