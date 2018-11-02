@@ -2,13 +2,6 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
-/*var players = [];
-var connection;
-var playersToSelect = 11;
-var functionalitiesToSelect = 5;
-var leadersToSelect = 1;
-var nextLevel = 0;
-var cardToPut = null;*/
 let receivedPlayers = [
     {
         image: "https://placehold.it/200x200",
@@ -421,10 +414,6 @@ const game = {
             const players = line.querySelectorAll(".player");
             players.forEach(item => {
                 item.onclick = () => this.showClickedCard(item);
-                console.log(item.querySelector(".attack"));
-                console.log(item.querySelector(".defense"));
-                console.log(item.querySelector(".attack span"));
-                console.log(item.querySelector(".defense span"));
                 att = Number(item.querySelector(".attack span").innerHTML);
                 def = Number(item.querySelector(".defense span").innerHTML);
                 newScore += att + def;
@@ -475,7 +464,7 @@ const game = {
         leaders.innerHTML = "";
         arr.forEach(item => {
             leaders.innerHTML += `
-      <div class="leader">
+      <div class="card leader">
         <div class="photo">
           <img src=${item.image} alt="leader photo">
         </div>
@@ -497,7 +486,7 @@ const game = {
         functionalities.innerHTML = "";
         arr.forEach(item => {
             functionalities.innerHTML += `
-      <div class="functionality">
+      <div class="card functionality">
         <div class="photo">
           <img src=${item.image} alt="functionality photo">
         </div>
@@ -516,11 +505,12 @@ const game = {
     },
 
     generatePlayers(arr) {
+        console.log(this.modalContent);
         const { modalContent: players } = this;
         players.innerHTML = "";
         arr.forEach(item => {
             players.innerHTML += `
-      <div class="player">
+      <div class="card player">
         <div class="photo">
           <img src=${item.image} alt="player photo">
         </div>
@@ -546,6 +536,104 @@ const game = {
       </div>
       `;
         })
+    },
+
+    sendCardsFromField() {
+        const cards = [];
+
+        line4 = this.myAttackLine.querySelectorAll(".card");
+        line3 = this.myMiddleLine.querySelectorAll(".card");
+        line2 = this.myDefenseLine.querySelectorAll(".card");
+        line1 = this.myGoalkeeperLine.querySelectorAll(".card");
+
+        line4.forEach(item => {
+            let card;
+            if (item.classList.contains("player")) {
+                card = this.generatePlayerobj(item);
+            } else {
+                card = this.generateFunctionalityObj(item);
+            }
+            card.pos = 4;
+            cards.push(card);
+        });
+
+        line3.forEach(item => {
+            let card;
+            if (item.classList.contains("player")) {
+                card = this.generatePlayerobj(item);
+            } else {
+                card = this.generateFunctionalityObj(item);
+            }
+            card.pos = 3;
+            cards.push(card);
+        });
+
+        line2.forEach(item => {
+            let card;
+            if (item.classList.contains("player")) {
+                card = this.generatePlayerobj(item);
+            } else {
+                card = this.generateFunctionalityObj(item);
+            }
+            card.pos = 2;
+            cards.push(card);
+        });
+
+        line1.forEach(item => {
+            let card;
+            if (item.classList.contains("player")) {
+                card = this.generatePlayerobj(item);
+            } else {
+                card = this.generateFunctionalityObj(item);
+            }
+            card.pos = 1;
+            cards.push(card);
+        });
+
+        console.log("players");
+
+        console.log(cards);
+
+        return cards;
+    },
+
+    generatePlayerobj(div, pos) {
+        const c = new Card();
+
+        c.image = div.querySelector(".photo img").src;
+        c.name = div.querySelector(".name").innerHTML;
+        c.attack = Number(div.querySelector(".attack span").innerHTML);
+        c.defense = Number(div.querySelector(".defense span").innerHTML);
+        c.fc = div.querySelector(".fc").innerHTML;
+        c.country = div.querySelector(".country").innerHTML;
+        c.tip = 0;
+        c.pos = pos;
+
+        return c;
+    },
+
+    generateFunctionalityObj(div, pos) {
+        const p = new Power();
+
+        p.image = div.querySelector(".photo img").src;
+        p.name = div.querySelector(".name").innerHTML;
+        p.description = div.querySelector(".description").innerHTML;
+        p.tip = 0;
+        p.pos = pos;
+
+        return p;
+    },
+
+    generateLeaderObj(div) {
+        const c = new Coach();
+
+        c.image = div.querySelector(".photo img").src;
+        c.name = div.querySelector(".name").innerHTML;
+        c.description = div.querySelector(".description").innerHTML;
+        this.active = 0;
+        this.passive = 0;
+        this.descpassive = "";
+        this.descactive = "";
     }
 }
 var player;
@@ -568,7 +656,6 @@ window.onload = function () {
     connection.connectionMethods.onConnected = () => {
         player.id = connection.connectionId;
         connection.invoke("ConnectedPlayer", connection.connectionId, JSON.stringify(player));
-
     }
 
     connection.connectionMethods.onDisconnected = () => {
@@ -590,10 +677,20 @@ window.onload = function () {
 
     //TODO: create update function that notifies the server of the client changes
     // this function gets called every .5 seconds
-    setInterval(update, 500);
+    setInterval(() => {
+        player.test++;
+        console.log("update cards");
+        console.log(game.sendCardsFromField());
+        player.cards = game.sendCardsFromField();
+        if (connection.socket.readyState == 1) {
+            connection.invoke("Update", connection.connectionId, JSON.stringify(player));
+        }
+    }, 500);
 }
 function update() {
     player.test++;
+    console.log("update cards");
+    player.cards = game.sendCardsFromField();
     if (connection.socket.readyState == 1) {
         connection.invoke("Update", connection.connectionId, JSON.stringify(player));
     }
@@ -603,7 +700,6 @@ function Player() {
     this.id = "";
     this.test = 0;
     this.cards = [];
-    this.powers = [];
     this.coach = null;
 }
 function Card() {

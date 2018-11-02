@@ -55,86 +55,86 @@ h2 {
     position: relative;
 }
 
-    .player .attack span,
-    .player .defense span {
-        display: block;
-    }
+.player .attack span,
+.player .defense span {
+    display: block;
+}
 
-    .player .attack {
-        background-color: red;
-        display: block;
-        height: 20px;
-        width: 20px;
-        border-radius: 50%;
-        position: absolute;
-        bottom: -10px;
-        right: -10px;
-        font-size: 15px;
-        color: white;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+.player .attack {
+    background-color: red;
+    display: block;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    position: absolute;
+    bottom: -10px;
+    right: -10px;
+    font-size: 15px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-    .player .defense {
-        background-color: green;
-        display: block;
-        height: 20px;
-        width: 20px;
-        border-radius: 50%;
-        position: absolute;
-        bottom: -10px;
-        left: -10px;
-        font-size: 15px;
-        color: white;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+.player .defense {
+    background-color: green;
+    display: block;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    position: absolute;
+    bottom: -10px;
+    left: -10px;
+    font-size: 15px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-    .player:hover,
-    .functionality:hover,
-    .leader:hover {
-        opacity: 1;
-    }
+.player:hover,
+.functionality:hover,
+.leader:hover {
+    opacity: 1;
+}
 
-    .player .photo,
-    .functionality .photo,
-    .leader .photo {
-        max-width: 100%;
-    }
+.player .photo,
+.functionality .photo,
+.leader .photo {
+    max-width: 100%;
+}
 
-    .player .information,
-    .functionality .information,
-    .leader .information {
-        width: 100%;
-        background-color: #eee;
-        padding: 10px;
-    }
+.player .information,
+.functionality .information,
+.leader .information {
+    width: 100%;
+    background-color: #eee;
+    padding: 10px;
+}
 
-    .player .photo img,
-    .functionality .photo img,
-    .leader .photo img {
-        max-width: 100%;
-    }
+.player .photo img,
+.functionality .photo img,
+.leader .photo img {
+    max-width: 100%;
+}
 
-    .player .name,
-    .functionality .name,
-    .leader .name {
-        font-size: 15px;
-        font-weight: bold;
-    }
+.player .name,
+.functionality .name,
+.leader .name {
+    font-size: 15px;
+    font-weight: bold;
+}
 
-    .functionality .description,
-    .leader .description {
-        font-size: 12px;
-    }
+.functionality .description,
+.leader .description {
+    font-size: 12px;
+}
 
-    .player .stats,
-    .player .fc,
-    .player .country {
-        font-size: 12px;
-    }
+.player .stats,
+.player .fc,
+.player .country {
+    font-size: 12px;
+}
 
 .selected-player,
 .selected-functionality,
@@ -142,22 +142,22 @@ h2 {
     opacity: 1;
 }
 
-    .selected-player::after,
-    .selected-functionality::after,
-    .selected-leader::after {
-        content: '\002714';
-        background-color: rgba(0, 170, 255, 1);
-        position: absolute;
-        color: white;
-        font-size: 12px;
-        text-align: center;
-        height: 20px;
-        width: 25px;
-        right: 0;
-        top: 0;
-        border-radius: 0 0 0 5px;
-        font-family: "FontAwesome";
-    }
+.selected-player::after,
+.selected-functionality::after,
+.selected-leader::after {
+    content: '\002714';
+    background-color: rgba(0, 170, 255, 1);
+    position: absolute;
+    color: white;
+    font-size: 12px;
+    text-align: center;
+    height: 20px;
+    width: 25px;
+    right: 0;
+    top: 0;
+    border-radius: 0 0 0 5px;
+    font-family: "FontAwesome";
+}
 
 .info-box {
     position: fixed;
@@ -185,20 +185,20 @@ h2 {
     height: 100vh;
 }
 
-    .board .info {
-        width: calc(100% - 700px);
-        height: 100vh;
-    }
+.board .info {
+    width: calc(100% - 700px);
+    height: 100vh;
+}
 
-    .board .field {
-        width: 700px;
-        height: 100vh;
-        background: url("../images/field.png");
-        background-color: #00bb00;
-        background-repeat: no-repeat;
-        background-size: contain;
-        background-position: center;
-    }
+.board .field {
+    width: 700px;
+    height: 100vh;
+    background: url("../images/field.png");
+    background-color: #00bb00;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
 
 .info {
     display: flex;
@@ -257,6 +257,31 @@ h2 {
     max-height: 50px;
 }
 
+.info .leader {
+    max-width: 120px;
+}
+
+.info .leader .photo {
+    max-width: 120px;
+    max-height: 120px;
+}
+
+.info .leader .information {
+    width: 200px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s;
+}
+
+.info .leader:hover .information {
+    visibility: visible;
+    opacity: 1;
+}
+
+
 .field .line .cards-place .player,
 .field .line .cards-place .functionality {
     min-width: 50px;
@@ -264,26 +289,26 @@ h2 {
     height: 50px;
 }
 
-    .info .cards-place .player .information .name,
-    .info .cards-place .player .information .country,
-    .info .cards-place .player .information .fc,
-    .info .cards-place .functionality .information,
-    .field .line .cards-place .player .information .name,
-    .field .line .cards-place .player .information .country,
-    .field .line .cards-place .player .information .fc,
-    .field .line .cards-place .functionality .information {
-        display: none;
-    }
+.info .cards-place .player .information .name,
+.info .cards-place .player .information .country,
+.info .cards-place .player .information .fc,
+.info .cards-place .functionality .information,
+.field .line .cards-place .player .information .name,
+.field .line .cards-place .player .information .country,
+.field .line .cards-place .player .information .fc,
+.field .line .cards-place .functionality .information {
+    display: none;
+}
 
-    .info .cards-place .functionality .photo,
-    .field .line .cards-place .functionality .photo {
-        max-height: 50px;
-    }
+.info .cards-place .functionality .photo,
+.field .line .cards-place .functionality .photo {
+    max-height: 50px;
+}
 
-    .info .cards-place .player .information,
-    .field .line .cards-place .player .information {
-        padding: 0;
-    }
+.info .cards-place .player .information,
+.field .line .cards-place .player .information {
+    padding: 0;
+}
 
 .field .line {
     height: calc(100% / 4);
@@ -293,13 +318,13 @@ h2 {
     position: relative;
 }
 
-    .field .line .cards-place {
-        height: 100%;
-        width: 100%;
-        overflow: auto;
-        display: flex;
-        justify-content: center;
-    }
+.field .line .cards-place {
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    display: flex;
+    justify-content: center;
+}
 
 .field .line-score {
     background-color: black;
@@ -321,21 +346,3 @@ h2 {
     background-color: white;
     color: black;
 }
-
-/*
-.field .goalkeeper {
-  background-color: rgba(255, 0, 0, 0.5);
-}
-
-.field .defense {
-  background-color: rgba(255, 255, 0, 0.5);
-}
-
-.field .middle {
-  background-color: rgba(0, 0, 255, 0.5);
-}
-
-.field .attack {
-  background-color: rgba(255, 255, 255, 0.5);
-}
-*/
