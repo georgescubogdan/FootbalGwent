@@ -524,6 +524,9 @@ const game = {
           <div class="fc">
             ${item.fc}
           </div>
+          <div class="tip">
+              ${item.tip}
+          </div>
           <div class="stats">
             <div class="attack">
               <span>${item.attack}</span>
@@ -606,7 +609,7 @@ const game = {
         c.defense = Number(div.querySelector(".defense span").innerHTML);
         c.fc = div.querySelector(".fc").innerHTML;
         c.country = div.querySelector(".country").innerHTML;
-        c.tip = 0;
+        c.tip = Number(div.querySelector(".tip").innerHTML);
         c.pos = pos;
 
         return c;
