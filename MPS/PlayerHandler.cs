@@ -21,6 +21,14 @@ namespace MPS
             var exists = GameManager.Instance.Players.ContainsKey(socketId);
             if (!exists)
                 GameManager.Instance.Players.TryAdd(player.id, player);
+            if (GameManager.Instance.Players.Count == 2)
+            {
+                Random rnd = new Random();
+                int starter = rnd.Next(0, 1);
+                GameManager.Instance.Players.ElementAt(starter).Value.turn = true;
+                var listOfPlayers = JsonConvert.SerializeObject(GameManager.Instance.Players.Values);
+                InvokeClientMethodToAllAsync("pingPlayers", listOfPlayers).Wait();
+            }
         }
 
         public async Task DisconnectedPlayer(string socketId, string pewpew)
@@ -35,10 +43,24 @@ namespace MPS
             if (exists != null)
             {
                 //TODO: Update logic
-                exists.test = player.test;
+                exists.turn = player.turn;
+                exists.pass = player.pass;
+                exists.opponentPass = player.opponentPass;
                 exists.cards = player.cards;
                 exists.coach = player.coach;
+                exists.powers = player.powers;
+                exists.opCards = player.opCards;
             }
+            foreach (var key in GameManager.Instance.Players.Keys)
+            {
+                if (key != player.id && player.turn == false)
+                {
+                    GameManager.Instance.Players[key].turn = true;
+                }
+            }
+            var listOfPlayers = JsonConvert.SerializeObject(GameManager.Instance.Players.Values);
+            InvokeClientMethodToAllAsync("pingPlayers", listOfPlayers).Wait();
+
         }
 
         public override async Task OnConnected(WebSocket socket)
