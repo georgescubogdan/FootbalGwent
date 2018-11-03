@@ -102,7 +102,7 @@ namespace MPS
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddWebSocketManager();
-            services.AddSingleton<SnakeHandler, SnakeHandler>();
+            services.AddSingleton<PlayerHandler, PlayerHandler>();
             // Add framework services.
             services.AddMvc();
         }
@@ -150,7 +150,7 @@ namespace MPS
             //        await next();
             //    }
             //});
-            app.MapWebSocketManager("/server", serviceProvider.GetService<SnakeHandler>());
+            app.MapWebSocketManager("/server", serviceProvider.GetService<PlayerHandler>());
 
             app.UseStaticFiles();
 
@@ -162,7 +162,7 @@ namespace MPS
             });
             ServiceProvider = serviceProvider;
 
-            GameManager.Instance.Initilize(serviceProvider.GetService<SnakeHandler>());
+            GameManager.Instance.Initilize(serviceProvider.GetService<PlayerHandler>());
         }
 
         private async Task Echo(HttpContext context, WebSocket webSocket)

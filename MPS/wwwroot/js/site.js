@@ -2,135 +2,738 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
-var snake;
-var apple;
-var map;
-var snakes = [];
-var connection;
+let receivedPlayers = [
+    {
+        image: "https://placehold.it/200x200",
+        name: "Player Name",
+        country: "Wonderland",
+        fc: "FC Best",
+        attack: 6,
+        defense: 4
+    },
+    {
+        image: "https://placehold.it/200x200",
+        name: "Player Name",
+        country: "Wonderland",
+        fc: "FC Best",
+        attack: 6,
+        defense: 4
+    },
+    {
+        image: "https://placehold.it/200x200",
+        name: "Player Name",
+        country: "Wonderland",
+        fc: "FC Best",
+        attack: 6,
+        defense: 4
+    },
+    {
+        image: "https://placehold.it/200x200",
+        name: "Player Name",
+        country: "Wonderland",
+        fc: "FC Best",
+        attack: 6,
+        defense: 4
+    },
+    {
+        image: "https://placehold.it/200x200",
+        name: "Player Name",
+        country: "Wonderland",
+        fc: "FC Best",
+        attack: 6,
+        defense: 4
+    },
+    {
+        image: "https://placehold.it/200x200",
+        name: "Player Name",
+        country: "Wonderland",
+        fc: "FC Best",
+        attack: 6,
+        defense: 4
+    },
+    {
+        image: "https://placehold.it/200x200",
+        name: "Player Name",
+        country: "Wonderland",
+        fc: "FC Best",
+        attack: 6,
+        defense: 4
+    },
+    {
+        image: "https://placehold.it/200x200",
+        name: "Player Name",
+        country: "Wonderland",
+        fc: "FC Best",
+        attack: 6,
+        defense: 4
+    },
+    {
+        image: "https://placehold.it/200x200",
+        name: "Player Name",
+        country: "Wonderland",
+        fc: "FC Best",
+        attack: 6,
+        defense: 4
+    },
+    {
+        image: "https://placehold.it/200x200",
+        name: "Player Name",
+        country: "Wonderland",
+        fc: "FC Best",
+        attack: 6,
+        defense: 4
+    },
+    {
+        image: "https://placehold.it/200x200",
+        name: "Player Name",
+        country: "Wonderland",
+        fc: "FC Best",
+        attack: 6,
+        defense: 4
+    },
+    {
+        image: "https://placehold.it/200x200",
+        name: "Player Name",
+        country: "Wonderland",
+        fc: "FC Best",
+        attack: 6,
+        defense: 4
+    },
+    {
+        image: "https://placehold.it/200x200",
+        name: "Player Name",
+        country: "Wonderland",
+        fc: "FC Best",
+        attack: 6,
+        defense: 4
+    },
+    {
+        image: "https://placehold.it/200x200",
+        name: "Player Name",
+        country: "Wonderland",
+        fc: "FC Best",
+        attack: 6,
+        defense: 4
+    },
+    {
+        image: "https://placehold.it/200x200",
+        name: "Player Name",
+        country: "Wonderland",
+        fc: "FC Best",
+        attack: 6,
+        defense: 4
+    },
+    {
+        image: "https://placehold.it/200x200",
+        name: "Player Name",
+        country: "Wonderland",
+        fc: "FC Best",
+        attack: 6,
+        defense: 4
+    },
+    {
+        image: "https://placehold.it/200x200",
+        name: "Player Name",
+        country: "Wonderland",
+        fc: "FC Best",
+        attack: 6,
+        defense: 4
+    },
+    {
+        image: "https://placehold.it/200x200",
+        name: "Player Name",
+        country: "Wonderland",
+        fc: "FC Best",
+        attack: 6,
+        defense: 4
+    },
+    {
+        image: "https://placehold.it/200x200",
+        name: "Player Name",
+        country: "Wonderland",
+        fc: "FC Best",
+        attack: 6,
+        defense: 4
+    },
+    {
+        image: "https://placehold.it/200x200",
+        name: "Player Name",
+        country: "Wonderland",
+        fc: "FC Best",
+        attack: 6,
+        defense: 4
+    },
+    {
+        image: "https://placehold.it/200x200",
+        name: "Player Name",
+        country: "Wonderland",
+        fc: "FC Best",
+        attack: 6,
+        defense: 4
+    },
+    {
+        image: "https://placehold.it/200x200",
+        name: "Player Name",
+        country: "Wonderland",
+        fc: "FC Best",
+        attack: 6,
+        defense: 4
+    },
+    {
+        image: "https://placehold.it/200x200",
+        name: "Player Name",
+        country: "Wonderland",
+        fc: "FC Best",
+        attack: 6,
+        defense: 4
+    },
+    {
+        image: "https://placehold.it/200x200",
+        name: "Player Name",
+        country: "Wonderland",
+        fc: "FC Best",
+        attack: 6,
+        defense: 4
+    },
+    {
+        image: "https://placehold.it/200x200",
+        name: "Player Name",
+        country: "Wonderland",
+        fc: "FC Best",
+        attack: 6,
+        defense: 4
+    }
+]
+let receivedFunctionalities = [
+    {
+        image: "https://placehold.it/200x200",
+        name: "Functionality name",
+        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil perspiciatis ipsum quos non delectus iure vitae cumque inventore autem assumenda, aperiam magnam architecto suscipit blanditiis facere modi aut id ea."
+    },
+    {
+        image: "https://placehold.it/200x200",
+        name: "Functionality name",
+        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil perspiciatis ipsum quos non delectus iure vitae cumque inventore autem assumenda, aperiam magnam architecto suscipit blanditiis facere modi aut id ea."
+    },
+    {
+        image: "https://placehold.it/200x200",
+        name: "Functionality name",
+        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil perspiciatis ipsum quos non delectus iure vitae cumque inventore autem assumenda, aperiam magnam architecto suscipit blanditiis facere modi aut id ea."
+    },
+    {
+        image: "https://placehold.it/200x200",
+        name: "Functionality name",
+        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil perspiciatis ipsum quos non delectus iure vitae cumque inventore autem assumenda, aperiam magnam architecto suscipit blanditiis facere modi aut id ea."
+    },
+    {
+        image: "https://placehold.it/200x200",
+        name: "Functionality name",
+        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil perspiciatis ipsum quos non delectus iure vitae cumque inventore autem assumenda, aperiam magnam architecto suscipit blanditiis facere modi aut id ea."
+    },
+    {
+        image: "https://placehold.it/200x200",
+        name: "Functionality name",
+        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil perspiciatis ipsum quos non delectus iure vitae cumque inventore autem assumenda, aperiam magnam architecto suscipit blanditiis facere modi aut id ea."
+    },
+    {
+        image: "https://placehold.it/200x200",
+        name: "Functionality name",
+        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil perspiciatis ipsum quos non delectus iure vitae cumque inventore autem assumenda, aperiam magnam architecto suscipit blanditiis facere modi aut id ea."
+    },
+    {
+        image: "https://placehold.it/200x200",
+        name: "Functionality name",
+        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil perspiciatis ipsum quos non delectus iure vitae cumque inventore autem assumenda, aperiam magnam architecto suscipit blanditiis facere modi aut id ea."
+    },
+    {
+        image: "https://placehold.it/200x200",
+        name: "Functionality name",
+        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil perspiciatis ipsum quos non delectus iure vitae cumque inventore autem assumenda, aperiam magnam architecto suscipit blanditiis facere modi aut id ea."
+    },
+    {
+        image: "https://placehold.it/200x200",
+        name: "Functionality name",
+        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil perspiciatis ipsum quos non delectus iure vitae cumque inventore autem assumenda, aperiam magnam architecto suscipit blanditiis facere modi aut id ea."
+    }
+]
+let receivedLeaders = [
+    {
+        image: "https://placehold.it/200x200",
+        name: "Leader Name",
+        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. In soluta repudiandae odio, provident quod hic harum delectus, sunt voluptatem architecto atque, expedita labore alias sequi."
+    },
+    {
+        image: "https://placehold.it/200x200",
+        name: "Leader Name",
+        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. In soluta repudiandae odio, provident quod hic harum delectus, sunt voluptatem architecto atque, expedita labore alias sequi."
+    },
+    {
+        image: "https://placehold.it/200x200",
+        name: "Leader Name",
+        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. In soluta repudiandae odio, provident quod hic harum delectus, sunt voluptatem architecto atque, expedita labore alias sequi."
+    },
+    {
+        image: "https://placehold.it/200x200",
+        name: "Leader Name",
+        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. In soluta repudiandae odio, provident quod hic harum delectus, sunt voluptatem architecto atque, expedita labore alias sequi."
+    },
+    {
+        image: "https://placehold.it/200x200",
+        name: "Leader Name",
+        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. In soluta repudiandae odio, provident quod hic harum delectus, sunt voluptatem architecto atque, expedita labore alias sequi."
+    },
+    {
+        image: "https://placehold.it/200x200",
+        name: "Leader Name",
+        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. In soluta repudiandae odio, provident quod hic harum delectus, sunt voluptatem architecto atque, expedita labore alias sequi."
+    }
+]
+
+const game = {
+    playersToSelect: 11,
+    functionalitiesToSelect: 5,
+    leadersToSelect: 1,
+    nextLevel: 0,
+    cardToPut: null,
+    init() {
+        this.modal = document.querySelector(".modal");
+        this.startBtn = document.querySelector("#startButton");
+        this.modalTitle = document.querySelector(".modal-title");
+        this.infoBox = document.querySelector(".info-box");
+        this.clickedCard = document.querySelector(".me .clicked-card");
+        this.startBtn.onclick = () => this.start();
+        this.nextBtn = document.querySelector("#nextButton");
+        this.nextBtn.onclick = () => this.next();
+        this.modalContent = document.querySelector(".select-items");
+        this.generatePlayers(receivedPlayers);
+        const generatedPlayers = document.querySelectorAll(".select-items .player");
+        this.asignClicks(generatedPlayers, "selected-player", "players");
+        this.myAttackLine = document.querySelector(".field .me .attack-line");
+        this.myMiddleLine = document.querySelector(".field .me .middle-line");
+        this.myDefenseLine = document.querySelector(".field .me .defense-line");
+        this.myGoalkeeperLine = document.querySelector(".field .me .goalkeeper-line");
+
+        this.myAttackLineScore = document.querySelector(".field .me .attack-line .line-score");
+        this.myMiddleLineScore = document.querySelector(".field .me .middle-line .line-score");
+        this.myDefenseLineScore = document.querySelector(".field .me .defense-line .line-score");
+        this.myGoalkeeperLineScore = document.querySelector(".field .me .goalkeeper-line .line-score");
+
+        this.myAttackLine.onclick = () => this.putClickedCardOnField(this.myAttackLine);
+        this.myMiddleLine.onclick = () => this.putClickedCardOnField(this.myMiddleLine);
+        this.myDefenseLine.onclick = () => this.putClickedCardOnField(this.myDefenseLine);
+        this.myGoalkeeperLine.onclick = () => this.putClickedCardOnField(this.myGoalkeeperLine);
+
+        console.log(this.myAttackLine);
+        console.log(this.myMiddleLine);
+        console.log(this.myDefenseLine);
+        console.log(this.myGoalkeeperLine);
+
+        /*
+            window.onclick = (e) => {
+              if (e.target == this.modal) {
+                this.modal.classList.remove("modal-active");
+              }
+            }*/
+    },
+
+    asignClicks(arr, activeItemClass, itemsName) {
+        arr.forEach(item => {
+            item.onclick = () => {
+                if (item.classList.contains(activeItemClass)) {
+                    item.classList.remove(activeItemClass);
+                    this[`${itemsName}ToSelect`]++;
+                    this.infoBox.innerHTML = `${itemsName} to select:<br>${this[`${itemsName}ToSelect`]}`;
+                } else {
+                    if (this[`${itemsName}ToSelect`] > 0) {
+                        item.classList.add(activeItemClass);
+                        this[`${itemsName}ToSelect`]--;
+                        this.infoBox.innerHTML = `${itemsName} to select:<br>${this[`${itemsName}ToSelect`]}`;
+                    } else {
+                        alert(`You have already selected all ${itemsName}. Press "Next" to continue.`);
+                    }
+                }
+            }
+        })
+    },
+
+    start() {
+        this.startBtn.style.display = "none";
+        this.modal.classList.add("modal-active");
+        this.infoBox.innerHTML = `Players to select:<br>11`;
+    },
+
+    next() {
+        if (this.nextLevel === 0) {
+            if (this.playersToSelect > 0) {
+                alert(`Please, select ${this.playersToSelect} more players`);
+            } else {
+                this.selectedPlayers = document.querySelectorAll(".selected-player");
+                this.nextLevel++;
+                this.modalTitle.innerHTML = "Select functionalities";
+                this.infoBox.innerHTML = `Functionalities to select:<br>5`;
+                this.generateFunctionalities(receivedFunctionalities);
+                const generatedFunctionalities = document.querySelectorAll(".select-items .functionality");
+                this.asignClicks(generatedFunctionalities, "selected-functionality", "functionalities");
+            }
+        } else if (this.nextLevel === 1) {
+            if (this.functionalitiesToSelect > 0) {
+                alert(`Please, select ${this.functionalitiesToSelect} more functionalities`);
+            } else {
+                this.selectedFunctionalities = document.querySelectorAll(".selected-functionality");
+                this.nextLevel++;
+                this.nextBtn.innerHTML = "Start";
+                this.modalTitle.innerHTML = "Select leader";
+                this.infoBox.innerHTML = `Leader to select:<br>1`;
+                this.generateLeaders(receivedLeaders);
+                const generatedLeaders = document.querySelectorAll(".select-items .leader");
+                this.asignClicks(generatedLeaders, "selected-leader", "leaders");
+            }
+        } else if (this.nextLevel === 2) {
+            this.selectedLeader = document.querySelector(".selected-leader");
+            this.modal.classList.remove("modal-active");
+            this.nextBtn.innerHTML = "Next";
+            console.log(this.selectedPlayers);
+            console.log(this.selectedFunctionalities);
+            console.log(this.selectedLeader);
+            this.putMySelectedCards();
+        }
+    },
+
+    putClickedCardOnField(line) {
+        cardsPlace = line.querySelector(".cards-place");
+        score = line.querySelector(".line-score");
+        let newScore = 0;
+        if (this.cardToPut) {
+            cardsPlace.appendChild(this.cardToPut);
+            this.cardToPut.onclick = () => this.showClickedCard(this.cardToPut);
+            this.cardToPut = null;
+            this.clickedCard.innerHTML = "";
+
+            const players = line.querySelectorAll(".player");
+            players.forEach(item => {
+                item.onclick = () => this.showClickedCard(item);
+                att = Number(item.querySelector(".attack span").innerHTML);
+                def = Number(item.querySelector(".defense span").innerHTML);
+                newScore += att + def;
+            });
+            score.innerHTML = newScore;
+
+            const functionalities = line.querySelectorAll(".functionality");
+            functionalities.forEach(item => item.onclick = () => this.showClickedCard(item));
+
+            if ((players.length + functionalities.length) > 8) {
+                cardsPlace.style.justifyContent = "flex-start";
+            }
+        }
+    },
+
+    showClickedCard(item) {
+        this.clickedCard.innerHTML = "";
+        newItem = item.cloneNode(true);
+        this.clickedCard.appendChild(newItem);
+    },
+
+    putClickedCard(item) {
+        this.showClickedCard(item);
+        this.cardToPut = item;
+    },
+
+    putMySelectedCards() {
+        this.leaderPlace = document.querySelector(".info .me .leader-place");
+        this.cardsPlace = document.querySelector(".info .me .cards-place");
+
+        this.selectedLeader.classList.remove("selected-leader");
+        this.leaderPlace.appendChild(this.selectedLeader);
+
+        this.selectedFunctionalities.forEach(item => {
+            item.onclick = () => this.putClickedCard(item);
+            item.classList.remove("selected-functionality");
+            this.cardsPlace.appendChild(item);
+        });
+        this.selectedPlayers.forEach(item => {
+            item.onclick = () => this.putClickedCard(item);
+            item.classList.remove("selected-player");
+            this.cardsPlace.appendChild(item);
+        });
+    },
+
+    generateLeaders(arr) {
+        const { modalContent: leaders } = this;
+        leaders.innerHTML = "";
+        arr.forEach(item => {
+            leaders.innerHTML += `
+      <div class="card leader">
+        <div class="photo">
+          <img src=${item.image} alt="leader photo">
+        </div>
+        <div class="information">
+          <div class="name">
+            ${item.name}
+          </div>
+          <div class="description">
+            ${item.description}
+          </div>
+        </div>
+      </div>
+      `
+        })
+    },
+
+    generateFunctionalities(arr) {
+        const { modalContent: functionalities } = this;
+        functionalities.innerHTML = "";
+        arr.forEach(item => {
+            functionalities.innerHTML += `
+      <div class="card functionality">
+        <div class="photo">
+          <img src=${item.image} alt="functionality photo">
+        </div>
+        <div class="information">
+          <div class="name">
+            ${item.name}
+          </div>
+          <div class="description">
+            ${item.description}
+          </div>
+        </div>
+
+      </div>
+      `
+        })
+    },
+
+    generatePlayers(arr) {
+        console.log(this.modalContent);
+        const { modalContent: players } = this;
+        players.innerHTML = "";
+        arr.forEach(item => {
+            players.innerHTML += `
+      <div class="card player">
+        <div class="photo">
+          <img src=${item.image} alt="player photo">
+        </div>
+        <div class="information">
+          <div class="name">
+            ${item.name}
+          </div>
+          <div class="country">
+            ${item.country}
+          </div>
+          <div class="fc">
+            ${item.fc}
+          </div>
+          <div class="tip">
+              ${item.tip}
+          </div>
+          <div class="stats">
+            <div class="attack">
+              <span>${item.attack}</span>
+            </div>
+            <div class="defense">
+              <span>${item.defense}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      `;
+        })
+    },
+
+    sendCardsFromField() {
+        const cards = [];
+
+        line4 = this.myAttackLine.querySelectorAll(".card");
+        line3 = this.myMiddleLine.querySelectorAll(".card");
+        line2 = this.myDefenseLine.querySelectorAll(".card");
+        line1 = this.myGoalkeeperLine.querySelectorAll(".card");
+
+        line4.forEach(item => {
+            let card;
+            if (item.classList.contains("player")) {
+                card = this.generatePlayerobj(item);
+            } else {
+                card = this.generateFunctionalityObj(item);
+            }
+            card.pos = 4;
+            cards.push(card);
+        });
+
+        line3.forEach(item => {
+            let card;
+            if (item.classList.contains("player")) {
+                card = this.generatePlayerobj(item);
+            } else {
+                card = this.generateFunctionalityObj(item);
+            }
+            card.pos = 3;
+            cards.push(card);
+        });
+
+        line2.forEach(item => {
+            let card;
+            if (item.classList.contains("player")) {
+                card = this.generatePlayerobj(item);
+            } else {
+                card = this.generateFunctionalityObj(item);
+            }
+            card.pos = 2;
+            cards.push(card);
+        });
+
+        line1.forEach(item => {
+            let card;
+            if (item.classList.contains("player")) {
+                card = this.generatePlayerobj(item);
+            } else {
+                card = this.generateFunctionalityObj(item);
+            }
+            card.pos = 1;
+            cards.push(card);
+        });
+
+        console.log("players");
+
+        console.log(cards);
+
+        return cards;
+    },
+
+    generatePlayerobj(div, pos) {
+        const c = new Card();
+
+        c.image = div.querySelector(".photo img").src;
+        c.name = div.querySelector(".name").innerHTML;
+        c.attack = Number(div.querySelector(".attack span").innerHTML);
+        c.defense = Number(div.querySelector(".defense span").innerHTML);
+        c.fc = div.querySelector(".fc").innerHTML;
+        c.country = div.querySelector(".country").innerHTML;
+        c.tip = Number(div.querySelector(".tip").innerHTML);
+        c.pos = pos;
+
+        return c;
+    },
+
+    generateFunctionalityObj(div, pos) {
+        const p = new Power();
+
+        p.image = div.querySelector(".photo img").src;
+        p.name = div.querySelector(".name").innerHTML;
+        p.description = div.querySelector(".description").innerHTML;
+        p.tip = 0;
+        p.pos = pos;
+
+        return p;
+    },
+
+    generateLeaderObj(div) {
+        const c = new Coach();
+
+        c.image = div.querySelector(".photo img").src;
+        c.name = div.querySelector(".name").innerHTML;
+        c.description = div.querySelector(".description").innerHTML;
+        this.active = 0;
+        this.passive = 0;
+        this.descpassive = "";
+        this.descactive = "";
+    }
+}
+var player;
+var players = [];
 window.onload = function () {
-    canv = document.getElementById("gc");
-    ctx = canv.getContext("2d");
-    document.addEventListener("keydown", keyPush);
+    player = new Player();
+    //Card randomize section
+    let cards = [];
+    for (let i = 0; i < 20; i++) {
+        cards.push(date.carte[Math.floor(Math.random() * date.carte.length)]);
+    }
+    receivedPlayers = cards;
 
-    map = new Map();
-    snake = new Snake();
-    apple = new Apple(15, 15);
 
-    //connection = new WebSocketManager.Connection("ws://localhost:5000/server");
-    connection = new WebSocketManager.Connection("ws://192.168.1.164:5000/server");
+    game.init();
+
+    //Connection section
+    connection = new WebSocketManager.Connection("ws://localhost:5000/server");
 
     connection.connectionMethods.onConnected = () => {
-        snake.id = connection.connectionId;
-        connection.invoke("ConnectedSnake", connection.connectionId, JSON.stringify(snake));
-
+        player.id = connection.connectionId;
+        connection.invoke("ConnectedPlayer", connection.connectionId, JSON.stringify(player));
     }
 
     connection.connectionMethods.onDisconnected = () => {
-        connection.invoke("DisconnectedSnake", connection.connectionId, "");
+        connection.invoke("DisconnectedPlayer", connection.connectionId, "");
     }
 
-    connection.clientMethods["pingSnakes"] = (sersnakes) => {
-        snakes = JSON.parse(sersnakes);
-        console.log(snakes);
+    connection.clientMethods["pingPlayers"] = (serverPlayers) => {
+        players = JSON.parse(serverPlayers);
+        console.log("received info:");
+        console.log(players);
     };
 
     connection.start();
    
     $(window).on("unload", function (e) {
-        connection.invoke("DisconnectedSnake", connection.connectionId, "");
+        connection.invoke("DisconnectedPlayer", connection.connectionId, "");
     });
 
-    setInterval(game, 1000 / 15);
+
+    //TODO: create update function that notifies the server of the client changes
+    // this function gets called every .5 seconds
+    setInterval(update, 500);
 }
 
+//TODO change this function to permit other player updates
+// ConnectionId -> otherPlayer.id; player -> otherPlayer
+function update() {
+    player.test++;
+    player.cards = game.sendCardsFromField();
+    //if (connection.socket.readyState == 1) {
+    //    connection.invoke("Update", connection.connectionId, JSON.stringify(player));
+    //}
+    players.forEach(p => {
+        if (p.id == player.id) {
+            p.cards = player.cards;
+            p.coach = player.coach;
+            //TODO and other update stuff
+        }
+        if (connection.socket.readyState == 1) {
+            connection.invoke("Update", p.id, JSON.stringify(p));
+        }
+    })
+}
 
-
-function Snake() {
+function Player() {
     this.id = "";
-    this.x = Math.floor(Math.random() * map.tilecount);
-    this.y = Math.floor(Math.random() * map.tilecount);
-    this.xvel = 0;
-    this.yvel = 0;
-    this.tail = 5;
-    this.trail = [];
+    this.test = 0;
+    this.cards = [];
+    this.coach = null;
 }
+function Card() {
+    this.image = "";
+    this.name = "";
+    this.attack = 0;
+    this.defense = 0;
+    this.fc = "";
+    this.country = "";
+    this.tip = 0;
+    this.pos = 0;
+    this.description = "";
 
-Snake.prototype.eat = function () {
-    this.tail++;
 }
-
-Snake.prototype.die = function () {
-    this.tail = 5;
+function Power() {
+    this.image = "";
+    this.name = "";
+    this.description = "";
+    this.tip = 0;
+    this.pos = 0;
 }
-
-function Map() {
-    this.gridsize = 20;
-    this.tilecount = 20;
-}
-
-function Apple(x, y) {
-    this.x = x;
-    this.y = y;
-}
-
-Apple.prototype.eaten = function () {
-    this.x = Math.floor(Math.random() * map.tilecount);
-    this.y = Math.floor(Math.random() * map.tilecount);
-}
-
-function game() {
-    snake.x += snake.xvel;
-    snake.y += snake.yvel;
-    if (snake.x < 0) {
-        snake.x = map.tilecount - 1;
-    }
-    if (snake.x > map.tilecount - 1) {
-        snake.x = 0;
-    }
-    if (snake.y < 0) {
-        snake.y = map.tilecount - 1;
-    }
-    if (snake.y > map.tilecount - 1) {
-        snake.y = 0;
-    }
-    ctx.fillStyle = "black";
-    ctx.fillRect(0, 0, canv.width, canv.height);
-
-
-    snakes.forEach(function (sna) {
-        if (sna.id != snake.id) {
-            for (var i = 0; i < sna.trail.length; i++) {
-                ctx.fillStyle = "lime";
-                ctx.fillRect(sna.trail[i].x * map.gridsize, sna.trail[i].y * map.gridsize, map.gridsize - 2, map.gridsize - 2);
-            }
-        }
-    });
-
-
-    ctx.fillStyle = "orange";
-    for (var i = 0; i < snake.trail.length; i++) {
-        ctx.fillRect(snake.trail[i].x * map.gridsize, snake.trail[i].y * map.gridsize, map.gridsize - 2, map.gridsize - 2);
-        if (snake.trail[i].x == snake.x && snake.trail[i].y == snake.y) {
-            snake.tail = 5;
-        }
-    }
-    snake.trail.push({ x: snake.x, y: snake.y });
-    while (snake.trail.length > snake.tail) {
-        snake.trail.shift();
-    }
-
-    if (connection.socket.readyState == 1) {
-        connection.invoke("OnMove", connection.connectionId, JSON.stringify(snake));
-    }
-
-
-    if (apple.x == snake.x && apple.y == snake.y) {
-        snake.tail++;
-        apple.x = Math.floor(Math.random() * map.tilecount);
-        apple.y = Math.floor(Math.random() * map.tilecount);
-    }
-    ctx.fillStyle = "red";
-    ctx.fillRect(apple.x * map.gridsize, apple.y * map.gridsize, map.gridsize - 2, map.gridsize - 2);
+function Coach() {
+    this.image = "";
+    this.name = "";
+    this.description = "";
+    this.active = 0;
+    this.passive = 0;
+    this.descpassive = "";
+    this.descactive = "";
 }
 function keyPush(evt) {
     switch (evt.keyCode) {
@@ -148,3 +751,290 @@ function keyPush(evt) {
             break;
     }
 }
+
+function applyPower(players, power) {
+    //Pentru playerul care nu suntem noi se lucreaza cu players.forEach
+    if (power.tip === 0) {
+        players.forEach(
+            p => {
+                if (p.id !== connection.connectionId) {
+                    p.cards.forEach(c => {
+                        if (c.pos === 4) {
+                            c.attack -= 3;
+                        }
+                    });
+                }
+            });
+    }
+    //Pentru playerul curent se lucreaza cu player
+    if (power.tip === 1) {
+        player.cards.forEach(c => {
+            if (c.pos === 4) {
+                c.attack += 3;
+            }
+        });
+    }
+}
+var date = {
+    "carte": [
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "adrian mutu",
+            "attack": "5",
+            "defense": "16",
+            "fc": "rapid",
+            "country": "romania",
+            "tip": "0",
+            "pos": "0"
+        },
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "Jordan Pickford",
+            "attack": "2",
+            "defense": "8",
+            "fc": "Everton",
+            "country": "England",
+            "tip": "0",
+            "pos": "0"
+        },
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "Kyle Walker",
+            "attack": "4",
+            "defense": "7",
+            "fc": "Manchester City",
+            "country": "England",
+            "tip": "1",
+            "pos": "0"
+        },
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "Kieran Trippier",
+            "attack": "2",
+            "defense": "8",
+            "fc": "Tottenham Hotspur",
+            "country": "England",
+            "tip": "1",
+            "pos": "0"
+        },
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "John Stones",
+            "attack": "2",
+            "defense": "5",
+            "fc": "Manchester City",
+            "country": "England",
+            "tip": "1",
+            "pos": "0"
+        },
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "Eric Dier",
+            "attack": "3",
+            "defense": "5",
+            "fc": "Tottenham Hotspur",
+            "country": "England",
+            "tip": "2",
+            "pos": "0"
+        },
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "Ross Barkley",
+            "attack": "3",
+            "defense": "6",
+            "fc": "Chelsea",
+            "country": "England",
+            "tip": "2",
+            "pos": "0"
+        },
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "Jordan Henderson",
+            "attack": "4",
+            "defense": "5",
+            "fc": "Liverpool",
+            "country": "England",
+            "tip": "2",
+            "pos": "0"
+        },
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "Harry Winks",
+            "attack": "4",
+            "defense": "4",
+            "fc": "Tottenham Hotspur",
+            "country": "England",
+            "tip": "2",
+            "pos": "0"
+        },
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "Raheem Sterling",
+            "attack": "8",
+            "defense": "2",
+            "fc": "Manchester City",
+            "country": "England",
+            "tip": "3",
+            "pos": "0"
+        },
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "Harry Kane",
+            "attack": "8",
+            "defense": "4",
+            "fc": "Tottenham Hotspur",
+            "country": "England",
+            "tip": "3",
+            "pos": "0"
+        },
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "Marcus Rashford",
+            "attack": "6",
+            "defense": "2",
+            "fc": "Manchester United",
+            "country": "England",
+            "tip": "3",
+            "pos": "0"
+        },
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "Hugo Lloris",
+            "attack": "3",
+            "defense": "8",
+            "fc": "Tottenham Hotspur",
+            "country": "France",
+            "tip": "0",
+            "pos": "0"
+        },
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "Benjamin Pavard",
+            "attack": "2",
+            "defense": "6",
+            "fc": "VfB Stuttgart",
+            "country": "France",
+            "tip": "1",
+            "pos": "0",
+            "": {}
+        },
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "Presnel Kimpembe",
+            "attack": "1",
+            "defense": "7",
+            "fc": "Paris Saint-Germain",
+            "country": "France",
+            "tip": "1",
+            "pos": "0",
+            "": {}
+        },
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "Mamadou Sakho",
+            "attack": "4",
+            "defense": "5",
+            "fc": "Crystal Palace",
+            "country": "France",
+            "tip": "1",
+            "pos": "0",
+            "": {}
+        },
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "Lucas Digne",
+            "attack": "3",
+            "defense": "5",
+            "fc": "Everton",
+            "country": "France",
+            "tip": "1",
+            "pos": "0",
+            "": {}
+        },
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "Lucas Hernández",
+            "attack": "2",
+            "defense": "6",
+            "fc": "Atlético Madrid",
+            "country": "France",
+            "tip": "1",
+            "pos": "0",
+            "": {}
+        },
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "N'Golo Kanté",
+            "attack": "4",
+            "defense": "5",
+            "fc": "Chelsea",
+            "country": "France",
+            "tip": "2",
+            "pos": "0",
+            "": {}
+        },
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "Blaise Matuidi",
+            "attack": "5",
+            "defense": "6",
+            "fc": "Juventus",
+            "country": "France",
+            "tip": "2",
+            "pos": "0",
+            "": {}
+        },
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "Tanguy Ndombele",
+            "attack": "5",
+            "defense": "3",
+            "fc": "Lyon",
+            "country": "France",
+            "tip": "2",
+            "pos": "0",
+            "": {}
+        },
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "Antoine Griezmann",
+            "attack": "7",
+            "defense": "1",
+            "fc": "Atlético Madrid",
+            "country": "France",
+            "tip": "3",
+            "pos": "0",
+            "": {}
+        },
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "Thomas Lemar",
+            "attack": "6",
+            "defense": "4",
+            "fc": "Atlético Madrid",
+            "country": "France",
+            "tip": "3",
+            "pos": "0"
+        }
+    ],
+    "power": [
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "cox",
+            "description": "50$/gr",
+            "tip": "0",
+            "pos": "0"
+        }
+    ],
+    "coach": [
+        {
+            "image": "https://placehold.it/200x200",
+            "name": "hagi",
+            "passive": "0",
+            "descpassive": "ai n-ai mingea dai la poarta",
+            "active": "0",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. In soluta repudiandae odio, provident quod hic harum delectus, sunt voluptatem architecto atque, expedita labore alias sequi.",
+            "descactive": "autogol"
+        }
+    ]
+};

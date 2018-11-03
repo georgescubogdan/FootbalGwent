@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\css\site.min.css" />
+    <Content Remove="wwwroot\js\scripts.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="WebSocketManager" Version="1.0.1" />
   </ItemGroup>
