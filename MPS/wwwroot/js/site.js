@@ -325,17 +325,22 @@ const game = {
         this.myDefenseLine.onclick = () => this.putClickedCardOnField(this.myDefenseLine);
         this.myGoalkeeperLine.onclick = () => this.putClickedCardOnField(this.myGoalkeeperLine);
 
-        console.log(this.myAttackLine);
-        console.log(this.myMiddleLine);
-        console.log(this.myDefenseLine);
-        console.log(this.myGoalkeeperLine);
-
         /*
             window.onclick = (e) => {
               if (e.target == this.modal) {
                 this.modal.classList.remove("modal-active");
               }
             }*/
+
+        this.enemyAttackLine = document.querySelector(".field .enemy .attack-line");
+        this.enemyMiddleLine = document.querySelector(".field .enemy .middle-line");
+        this.enemyDefenseLine = document.querySelector(".field .enemy .defense-line");
+        this.enemyGoalkeeperLine = document.querySelector(".field .enemy .goalkeeper-line");
+
+        this.enemyAttackLineScore = document.querySelector(".field .enemy .attack-line .line-score");
+        this.enemyMiddleLineScore = document.querySelector(".field .enemy .middle-line .line-score");
+        this.enemyDefenseLineScore = document.querySelector(".field .enemy .defense-line .line-score");
+        this.enemyGoalkeeperLineScore = document.querySelector(".field .enemy .goalkeeper-line .line-score");
     },
 
     asignClicks(arr, activeItemClass, itemsName) {
@@ -634,6 +639,140 @@ const game = {
         this.passive = 0;
         this.descpassive = "";
         this.descactive = "";
+    },
+
+    generatePlayerCardFromObj(obj) {
+        const player = createElement("div");
+        player.classList.add("card", "player");
+        player.innerHTML = `
+        <div class="photo">
+          <img src=${item.image} alt="player photo">
+        </div>
+        <div class="information">
+          <div class="name">
+            ${obj.name}
+          </div>
+          <div class="country">
+            ${obj.country}
+          </div>
+          <div class="fc">
+            ${obj.fc}
+          </div>
+          <div class="stats">
+            <div class="attack">
+              <span>${obj.attack}</span>
+            </div>
+            <div class="defense">
+              <span>${obj.defense}</span>
+            </div>
+          </div>
+        </div>
+        `;
+        player.onclick = () => this.showClickedCard(player);
+
+        return player;
+    },
+
+    generateFunctionalityCardFromObj(obj) {
+        const func = createElement("div");
+        func.classList.add("card", "functionality");
+        func.innerHTML = `
+        <div class="photo">
+          <img src=${obj.image} alt="functionality photo">
+        </div>
+        <div class="information">
+          <div class="name">
+            ${obj.name}
+          </div>
+          <div class="description">
+            ${obj.description}
+          </div>
+        </div>
+        `;
+        func.onclick = () => this.showClickedCard(func);
+
+        return func;
+    },
+
+    putOnFieldByPos(attDiv, midDiv, defDiv, gkDiv, pos, cardDiv) {
+        if (pos === 1) {
+            gkDiv.appendChild(cardDiv);
+        } else if (pos === 2) {
+            defDiv.appendChild(cardDiv);
+        } else if (pos === 3) {
+            midDiv.appendChild(cardDiv);
+        } else {
+            attDiv.appendChild(cardDiv);
+        }
+    },
+
+    generateCardsOnFieldFromBlob(info, currPlayerId) {
+        info.forEach(player => {
+            if (player.id === currPlayerId) {
+                const { myAttackLine, myMiddleLine, myDefenseLine, myGoalkeeperLine } = this;
+                
+                myAttCardsPlace = myAttackLine.querySelector(".cards-place");
+                myAttScore = myAttackLine.querySelector(".line-score");
+
+                myMidCardsPlace = myMiddleLine.querySelector(".cards-place");
+                myMidScore = myMiddleLine.querySelector(".line-score");
+
+                myDefCardsPlace = myDefenseLine.querySelector(".cards-place");
+                myDefScore = myDefenseLine.querySelector(".line-score");
+
+                myGkCardsPlace = myGoalkeeperLine.querySelector(".cards-place");
+                myGkScore = myGoalkeeperLine.querySelector(".line-score");
+
+                myAttCardsPlace.innerHTML = "";
+                myMidCardsPlace.innerHTML = "";
+                myDefCardsPlace.innerHTML = "";
+                myGkCardsPlace.innerHTML = "";
+
+                if (player.cards.length > 0) {
+                    player.cards.forEach(card => {
+                        let cardDiv;
+                        if (!card.fc && !card.country) {
+                            cardDiv = this.generateFunctionalityCardFromObj(card);
+                        } else {
+                            cardDiv = this.generatePlayerCardFromObj(card);
+                        }
+
+                        putOnFieldByPos(myAttCardsPlace, myMidCardsPlace, myDefCardsPlace, myGkCardsPlace, card.pos, cardDiv);
+                    });
+                }
+            } else {
+                const { enemyAttackLine, enemyMiddleLine, enemyDefenseLine, enemyGoalkeeperLine } = this;
+                enemyAttCardsPlace = enemyAttackLine.querySelector(".cards-place");
+                enemyAttScore = enemyAttackLine.querySelector(".line-score");
+
+                enemyMidCardsPlace = enemyMiddleLine.querySelector(".cards-place");
+                enemyMidScore = enemyMiddleLine.querySelector(".line-score");
+
+                enemyDefCardsPlace = enemyDefenseLine.querySelector(".cards-place");
+                enemyDefScore = enemyDefenseLine.querySelector(".line-score");
+
+                enemyGkCardsPlace = enemyGoalkeeperLine.querySelector(".cards-place");
+                enemyGkScore = enemyGoalkeeperLine.querySelector(".line-score");
+
+                enemyAttCardsPlace.innerHTML = "";
+                enemyMidCardsPlace.innerHTML = "";
+                enemyDefCardsPlace.innerHTML = "";
+                enemyGkCardsPlace.innerHTML = "";
+
+                if (player.cards.length > 0) {
+                    player.cards.forEach(card => {
+                        let cardDiv;
+                        if (!card.fc && !card.country) {
+                            cardDiv = this.generateFunctionalityCardFromObj(card);
+                        } else {
+                            cardDiv = this.generatePlayerCardFromObj(card);
+                        }
+
+                        putOnFieldByPos(enemyAttCardsPlace, enemyMidCardsPlace, enemyDefCardsPlace, enemyGkCardsPlace, card.pos, cardDiv);
+                    });
+                }
+            }
+        });
     }
 }
 var player;
@@ -666,6 +805,7 @@ window.onload = function () {
         players = JSON.parse(serverPlayers);
         console.log("received info:");
         console.log(players);
+        game.generateCardsOnFieldFromBlob(players, player.id);
     };
 
     connection.start();
