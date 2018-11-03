@@ -854,7 +854,12 @@ window.onload = function () {
     //Card randomize section
     let cards = [];
     for (let i = 0; i < 20; i++) {
-        cards.push(date.carte[Math.floor(Math.random() * date.carte.length)]);
+        let newCard = date.carte[Math.floor(Math.random() * date.carte.length)];
+        while (cards.filter(c => c.name === newCard.name).length > 0) 
+        {
+            newCard = date.carte[Math.floor(Math.random() * date.carte.length)];
+        }
+        cards.push(newCard);
     }
     receivedPlayers = cards;
 
