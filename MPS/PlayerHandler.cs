@@ -56,14 +56,6 @@ namespace MPS
                 if (key != player.id && player.turn == false)
                 {
                     GameManager.Instance.Players[key].turn = true;
-                    //var inOponentHandsUpdated = 
-                    //    player.opCards.Except(
-                    //        GameManager.Instance.Players[key].cards);
-
-                    //if (inOponentHandsUpdated.Any())
-                    //{
-                    //    GameManager.Instance.Players[key].cards = player.opCards;
-                    //}
 
                     var shouldUpdateOpCards = false;
                     foreach (var opponentCardUpdated in player.opCards)
@@ -92,9 +84,8 @@ namespace MPS
                     }
                 }
             }
+
             var listOfPlayers = JsonConvert.SerializeObject(GameManager.Instance.Players.Values);
-
-
             InvokeClientMethodToAllAsync("pingPlayers", listOfPlayers).Wait();
 
         }
