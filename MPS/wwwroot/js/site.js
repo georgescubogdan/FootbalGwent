@@ -410,7 +410,12 @@ const game = {
         cardsPlace = line.querySelector(".cards-place");
         score = line.querySelector(".line-score");
         let newScore = 0;
-        if (this.cardToPut && players.find(p => p.id === player.id).turn === true) {
+        if ((this.cardToPut
+                && players.find(p => p.id === player.id).turn === true
+                && players.find(p => p.id === player.id).pass === false)
+            || (this.cardToPut
+                && players.find(p => p.id === player.id).opponentPass === true
+                && players.find(p => p.id === player.id).pass === false)) {
             cardsPlace.appendChild(this.cardToPut);
             this.cardToPut.onclick = () => this.showClickedCard(this.cardToPut);
             player.cards = this.sendCardsFromField();
@@ -433,6 +438,8 @@ const game = {
                 cardsPlace.style.justifyContent = "flex-start";
             }
             this.updateTurn();
+        } else if (players.find(p => p.id === player.id).pass === true) {
+            alert("You passed bro! Wait for the other to finish!");
         } else {
             console.log(players);
             alert("Not your turn, bro!");
@@ -881,6 +888,25 @@ window.onload = function () {
     setInterval(update, 1000);
 }
 
+function checkRoundOrMatchFinish() {
+    let passCount = 0;
+    players.forEach(p => {
+        passCount += p.pass ? 0 : 1;
+    });
+    if (passCount === 2) {
+        //TODO suma scoruri pentru ambii jucatori
+        //TODO in functie de suma sa se adauge +1 la scorul jucatorului invingator
+        //TODO increment la roundCount in ambii jucatori
+        if (player.roundCount === 3) {
+            //TODO compara player.score la ambii jucatori
+            //TODO sa se afiseze la ambii jucatori un alert cu cel care a castigat meciul
+        } else {
+            //TODO sa se curete boardul si sa se elimine cartile
+            //TODO sa se afiseze la ambii jucatori un alert cu cel care a castigat runda
+        }
+        
+    }
+}
 //TODO change this function to permit other player updates
 // ConnectionId -> otherPlayer.id; player -> otherPlayer
 function update() {

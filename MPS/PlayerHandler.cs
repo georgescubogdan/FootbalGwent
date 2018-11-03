@@ -83,6 +83,11 @@ namespace MPS
                         GameManager.Instance.Players[key].cards = player.opCards;
                     }
                 }
+
+                if (key != player.id && player.pass == true)
+                {
+                    GameManager.Instance.Players[key].opponentPass = true;
+                }
             }
 
             var listOfPlayers = JsonConvert.SerializeObject(GameManager.Instance.Players.Values);
