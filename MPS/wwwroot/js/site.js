@@ -307,9 +307,7 @@ const game = {
         this.modalContent = document.querySelector(".select-items");
         this.generatePlayers(receivedPlayers);
         const generatedPlayers = document.querySelectorAll(".select-items .player");
-
         this.asignClicks(generatedPlayers, "selected-player", "players");
-
         this.myAttackLine = document.querySelector(".field .me .attack-line");
         this.myMiddleLine = document.querySelector(".field .me .middle-line");
         this.myDefenseLine = document.querySelector(".field .me .defense-line");
