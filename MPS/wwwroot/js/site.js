@@ -930,6 +930,8 @@ function update() {
         if (p.id == player.id) {
             p.cards = player.cards;
             p.coach = player.coach;
+           // p.score = player.score;
+           // p.roundCount = player.roundCount;
            // p.turn = player.turn;
             p.pass = player.pass;
             p.opponentPass = player.opponentPass;
@@ -953,7 +955,8 @@ function Player() {
     this.turn = false;
     this.pass = false;
     this.opponentPass = false;
-
+    this.roundCount = 0;
+    this.score = 0;
 }
 function Card() {
     this.image = "";

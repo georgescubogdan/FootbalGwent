@@ -15,6 +15,8 @@ namespace MPS
         public bool turn { get; set; }
         public bool opponentPass { get; set; }
         public Card[] opCards { get; set; }
+        public int roundCount { get; set; }
+        public int score { get; set; }
     }
 
     public class Card

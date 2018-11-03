@@ -50,6 +50,8 @@ namespace MPS
                 exists.coach = player.coach;
                 exists.powers = player.powers;
                 exists.opCards = player.opCards;
+                exists.roundCount = player.roundCount;
+                exists.score = player.score;
             }
             foreach (var key in GameManager.Instance.Players.Keys)
             {
