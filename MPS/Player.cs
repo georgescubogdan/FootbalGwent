@@ -8,10 +8,13 @@ namespace MPS
     public class Player
     {
         public string id { get; set; }
-        public string test { get; set; }
         public Coach coach { get; set; }
         public Card[] cards { get; set; }
         public Power[] powers { get; set; }
+        public bool pass { get; set; }
+        public bool turn { get; set; }
+        public bool opponentPass { get; set; }
+        public Card[] opCards { get; set; }
     }
 
     public class Card
