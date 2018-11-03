@@ -751,8 +751,8 @@ const game = {
         });
         score.innerHTML = newScore;
 
-        const functionalities = line.querySelectorAll(".functionality");
-        if ((players.length + functionalities.length) > 8) {
+        const functionalityDivs = line.querySelectorAll(".functionality");
+        if ((playerDivs.length + functionalityDivs.length) > 8) {
             cardsPlace.style.justifyContent = "flex-start";
         }
     },
