@@ -313,10 +313,10 @@ const game = {
         this.myDefenseLine = document.querySelector(".field .me .defense-line");
         this.myGoalkeeperLine = document.querySelector(".field .me .goalkeeper-line");
 
-        this.myAttackLineScore = document.querySelector(".field .me .attack-line .line-score");
-        this.myMiddleLineScore = document.querySelector(".field .me .middle-line .line-score");
-        this.myDefenseLineScore = document.querySelector(".field .me .defense-line .line-score");
-        this.myGoalkeeperLineScore = document.querySelector(".field .me .goalkeeper-line .line-score");
+        this.myAttackLineScore = document.querySelector(".field .me .attack-line .line-score span");
+        this.myMiddleLineScore = document.querySelector(".field .me .middle-line .line-score span");
+        this.myDefenseLineScore = document.querySelector(".field .me .defense-line .line-score span");
+        this.myGoalkeeperLineScore = document.querySelector(".field .me .goalkeeper-line .line-score span");
 
         this.myAttackLine.onclick = () => this.putClickedCardOnField(this.myAttackLine);
         this.myMiddleLine.onclick = () => this.putClickedCardOnField(this.myMiddleLine);
@@ -335,10 +335,10 @@ const game = {
         this.enemyDefenseLine = document.querySelector(".field .enemy .defense-line");
         this.enemyGoalkeeperLine = document.querySelector(".field .enemy .goalkeeper-line");
 
-        this.enemyAttackLineScore = document.querySelector(".field .enemy .attack-line .line-score");
-        this.enemyMiddleLineScore = document.querySelector(".field .enemy .middle-line .line-score");
-        this.enemyDefenseLineScore = document.querySelector(".field .enemy .defense-line .line-score");
-        this.enemyGoalkeeperLineScore = document.querySelector(".field .enemy .goalkeeper-line .line-score");
+        this.enemyAttackLineScore = document.querySelector(".field .enemy .attack-line .line-score span");
+        this.enemyMiddleLineScore = document.querySelector(".field .enemy .middle-line .line-score span");
+        this.enemyDefenseLineScore = document.querySelector(".field .enemy .defense-line .line-score span");
+        this.enemyGoalkeeperLineScore = document.querySelector(".field .enemy .goalkeeper-line .line-score span");
 
         this.passBtn = document.querySelector("#pass");
     },
@@ -408,7 +408,7 @@ const game = {
 
     putClickedCardOnField(line) {
         cardsPlace = line.querySelector(".cards-place");
-        score = line.querySelector(".line-score");
+        score = line.querySelector(".line-score span");
         let newScore = 0;
         if (this.cardToPut && players.find(p => p.id === player.id).turn === true) {
             cardsPlace.appendChild(this.cardToPut);
@@ -740,7 +740,7 @@ const game = {
         }
 
         cardsPlace = line.querySelector(".cards-place");
-        score = line.querySelector(".line-score");
+        score = line.querySelector(".line-score span");
         let newScore = 0;
 
         const playerDivs = line.querySelectorAll(".player");
@@ -763,16 +763,9 @@ const game = {
                 const { myAttackLine, myMiddleLine, myDefenseLine, myGoalkeeperLine } = this;
 
                 myAttCardsPlace = myAttackLine.querySelector(".cards-place");
-                myAttScore = myAttackLine.querySelector(".line-score");
-
                 myMidCardsPlace = myMiddleLine.querySelector(".cards-place");
-                myMidScore = myMiddleLine.querySelector(".line-score");
-
                 myDefCardsPlace = myDefenseLine.querySelector(".cards-place");
-                myDefScore = myDefenseLine.querySelector(".line-score");
-
                 myGkCardsPlace = myGoalkeeperLine.querySelector(".cards-place");
-                myGkScore = myGoalkeeperLine.querySelector(".line-score");
 
                 myAttCardsPlace.innerHTML = "";
                 myMidCardsPlace.innerHTML = "";
@@ -795,16 +788,9 @@ const game = {
 
                 const { enemyAttackLine, enemyMiddleLine, enemyDefenseLine, enemyGoalkeeperLine } = this;
                 enemyAttCardsPlace = enemyAttackLine.querySelector(".cards-place");
-                enemyAttScore = enemyAttackLine.querySelector(".line-score");
-
                 enemyMidCardsPlace = enemyMiddleLine.querySelector(".cards-place");
-                enemyMidScore = enemyMiddleLine.querySelector(".line-score");
-
                 enemyDefCardsPlace = enemyDefenseLine.querySelector(".cards-place");
-                enemyDefScore = enemyDefenseLine.querySelector(".line-score");
-
                 enemyGkCardsPlace = enemyGoalkeeperLine.querySelector(".cards-place");
-                enemyGkScore = enemyGoalkeeperLine.querySelector(".line-score");
 
                 enemyAttCardsPlace.innerHTML = "";
                 enemyMidCardsPlace.innerHTML = "";
@@ -832,6 +818,26 @@ const game = {
     //TODO implement pass button logic
     pressPass(player) {
         player.pass = true;
+    },
+
+    getMyTotalSum() {
+        let sum = 0;
+
+        sum += Number(this.myAttackLineScore.innerHTML) +
+            Number(this.myMiddleLineScore.innerHTML) +
+            Number(this.myDefenseLineScore.innerHTML) +
+            Number(this.myGoalkeeperLineScore.innerHTML);
+        return sum;
+    },
+
+    getEnemyTotalSum() {
+        let sum = 0;
+
+        sum += Number(this.enemyAttackLineScore.innerHTML) +
+            Number(this.enemyMiddleLineScore.innerHTML) +
+            Number(this.enemyDefenseLineScore.innerHTML) +
+            Number(this.enemyGoalkeeperLineScore.innerHTML);
+        return sum;
     }
 }
 var player;
@@ -888,6 +894,12 @@ function update() {
     //if (connection.socket.readyState == 1) {
     //    connection.invoke("Update", connection.connectionId, JSON.stringify(player));
     //}
+
+    const myTotalScore = game.getMyTotalSum();
+    const enemyTotalScore = game.getEnemyTotalSum();
+    console.log("MY SCORE " + myTotalScore);
+    console.log("ENEMY SCORE " + enemyTotalScore);
+
     players.forEach(p => {
         if (p.id == player.id) {
             p.cards = player.cards;
