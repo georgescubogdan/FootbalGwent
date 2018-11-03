@@ -56,8 +56,35 @@ namespace MPS
                 if (key != player.id && player.turn == false)
                 {
                     GameManager.Instance.Players[key].turn = true;
+
+                    var shouldUpdateOpCards = false;
+                    foreach (var opponentCardUpdated in player.opCards)
+                    {
+                        foreach (var opponentCard in GameManager.Instance.Players[key].cards)
+                        {
+                            if (opponentCardUpdated.name == opponentCard.name && 
+                                (opponentCardUpdated.attack != opponentCard.attack ||
+                                 opponentCardUpdated.defense != opponentCard.defense || 
+                                 opponentCardUpdated.pos != opponentCard.pos)) 
+                            {
+                                shouldUpdateOpCards = true;
+                                break;
+                            }
+                        }
+
+                        if (shouldUpdateOpCards == true)
+                        {
+                            break;
+                        }
+                    }
+
+                    if (shouldUpdateOpCards == true) 
+                    {
+                        GameManager.Instance.Players[key].cards = player.opCards;
+                    }
                 }
             }
+
             var listOfPlayers = JsonConvert.SerializeObject(GameManager.Instance.Players.Values);
             InvokeClientMethodToAllAsync("pingPlayers", listOfPlayers).Wait();
 
