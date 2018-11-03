@@ -413,6 +413,7 @@ const game = {
         if (this.cardToPut && players.find(p => p.id === player.id).turn === true) {
             cardsPlace.appendChild(this.cardToPut);
             this.cardToPut.onclick = () => this.showClickedCard(this.cardToPut);
+            player.cards = this.sendCardsFromField();
             this.cardToPut = null;
             this.clickedCard.innerHTML = "";
 
@@ -437,6 +438,7 @@ const game = {
             alert("Not your turn, bro!");
         }
     },
+
     updateTurn() {
         //console.log("update");
         //console.log(players);
@@ -450,6 +452,7 @@ const game = {
         //players.forEach(p => { p.turn = !p.turn });
         //console.log(players);
     },
+
     showClickedCard(item) {
         this.clickedCard.innerHTML = "";
         newItem = item.cloneNode(true);
@@ -546,7 +549,7 @@ const game = {
             ${item.fc}
           </div>
           <div class="tip">
-              ${item.tip}
+            ${item.tip}
           </div>
           <div class="stats">
             <div class="attack">
@@ -573,44 +576,40 @@ const game = {
         line4.forEach(item => {
             let card;
             if (item.classList.contains("player")) {
-                card = this.generatePlayerobj(item);
+                card = this.generatePlayerobj(item, 4);
             } else {
-                card = this.generateFunctionalityObj(item);
+                card = this.generateFunctionalityObj(item, 4);
             }
-            card.pos = 4;
             cards.push(card);
         });
 
         line3.forEach(item => {
             let card;
             if (item.classList.contains("player")) {
-                card = this.generatePlayerobj(item);
+                card = this.generatePlayerobj(item, 3);
             } else {
-                card = this.generateFunctionalityObj(item);
+                card = this.generateFunctionalityObj(item, 3);
             }
-            card.pos = 3;
             cards.push(card);
         });
 
         line2.forEach(item => {
             let card;
             if (item.classList.contains("player")) {
-                card = this.generatePlayerobj(item);
+                card = this.generatePlayerobj(item, 2);
             } else {
-                card = this.generateFunctionalityObj(item);
+                card = this.generateFunctionalityObj(item, 2);
             }
-            card.pos = 2;
             cards.push(card);
         });
 
         line1.forEach(item => {
             let card;
             if (item.classList.contains("player")) {
-                card = this.generatePlayerobj(item);
+                card = this.generatePlayerobj(item, 1);
             } else {
-                card = this.generateFunctionalityObj(item);
+                card = this.generateFunctionalityObj(item, 1);
             }
-            card.pos = 1;
             cards.push(card);
         });
 
@@ -661,11 +660,11 @@ const game = {
     },
 
     generatePlayerCardFromObj(obj) {
-        const player = createElement("div");
+        const player = document.createElement("div");
         player.classList.add("card", "player");
         player.innerHTML = `
         <div class="photo">
-          <img src=${item.image} alt="player photo">
+          <img src=${obj.image} alt="player photo">
         </div>
         <div class="information">
           <div class="name">
@@ -676,6 +675,9 @@ const game = {
           </div>
           <div class="fc">
             ${obj.fc}
+          </div>
+          <div class="tip">
+            ${obj.tip}
           </div>
           <div class="stats">
             <div class="attack">
@@ -693,7 +695,7 @@ const game = {
     },
 
     generateFunctionalityCardFromObj(obj) {
-        const func = createElement("div");
+        const func = document.createElement("div");
         func.classList.add("card", "functionality");
         func.innerHTML = `
         <div class="photo">
@@ -722,6 +724,36 @@ const game = {
             midDiv.appendChild(cardDiv);
         } else {
             attDiv.appendChild(cardDiv);
+        }
+    },
+
+    updateScoreOnLine(attLine, midLine, defLine, gkLine, pos) {
+        let line;
+        if (pos === 1) {
+            line = gkLine;
+        } else if (pos === 2) {
+            line = defLine;
+        } else if (pos === 3) {
+            line = midLine;
+        } else {
+            line = attLine;
+        }
+
+        cardsPlace = line.querySelector(".cards-place");
+        score = line.querySelector(".line-score");
+        let newScore = 0;
+
+        const playerDivs = line.querySelectorAll(".player");
+        playerDivs.forEach(item => {
+            const att = Number(item.querySelector(".attack span").innerHTML);
+            const def = Number(item.querySelector(".defense span").innerHTML);
+            newScore += att + def;
+        });
+        score.innerHTML = newScore;
+
+        const functionalities = line.querySelectorAll(".functionality");
+        if ((players.length + functionalities.length) > 8) {
+            cardsPlace.style.justifyContent = "flex-start";
         }
     },
 
@@ -756,7 +788,8 @@ const game = {
                             cardDiv = this.generatePlayerCardFromObj(card);
                         }
 
-                        putOnFieldByPos(myAttCardsPlace, myMidCardsPlace, myDefCardsPlace, myGkCardsPlace, card.pos, cardDiv);
+                        this.putOnFieldByPos(myAttCardsPlace, myMidCardsPlace, myDefCardsPlace, myGkCardsPlace, card.pos, cardDiv);
+                        this.updateScoreOnLine(myAttackLine, myMiddleLine, myDefenseLine, myGoalkeeperLine, card.pos);
                     });
                 }
 
@@ -787,7 +820,9 @@ const game = {
                             cardDiv = this.generatePlayerCardFromObj(card);
                         }
 
-                        putOnFieldByPos(enemyAttCardsPlace, enemyMidCardsPlace, enemyDefCardsPlace, enemyGkCardsPlace, card.pos, cardDiv);
+                        this.putOnFieldByPos(enemyAttCardsPlace, enemyMidCardsPlace, enemyDefCardsPlace, enemyGkCardsPlace, card.pos, cardDiv);
+                        this.updateScoreOnLine(enemyAttackLine, enemyMiddleLine, enemyDefenseLine, enemyGoalkeeperLine, card.pos);
+
                     });
                 }
             }
@@ -843,7 +878,7 @@ window.onload = function () {
 
     //TODO: create update function that notifies the server of the client changes
     // this function gets called every .5 seconds
-    setInterval(update, 500);
+    setInterval(update, 1000);
 }
 
 //TODO change this function to permit other player updates
