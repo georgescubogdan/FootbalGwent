@@ -341,7 +341,6 @@ const game = {
         this.enemyGoalkeeperLineScore = document.querySelector(".field .enemy .goalkeeper-line .line-score");
 
         this.passBtn = document.querySelector("#pass");
-        //this.passBtn.onclick = () => this.pressPass();
     },
 
     asignClicks(arr, activeItemClass, itemsName) {
@@ -780,7 +779,7 @@ const game = {
                 enemyGkCardsPlace.innerHTML = "";
 
                 if (player.opCards.length > 0) {
-                    player.cards.forEach(card => {
+                    player.opCards.forEach(card => {
                         let cardDiv;
                         if (!card.fc && !card.country) {
                             cardDiv = this.generateFunctionalityCardFromObj(card);
@@ -793,6 +792,11 @@ const game = {
                 }
             }
         });
+    },
+
+    //TODO implement pass button logic
+    pressPass(player) {
+        player.pass = true;
     }
 }
 var player;
@@ -808,6 +812,7 @@ window.onload = function () {
 
 
     game.init();
+    game.passBtn.onclick = () => game.pressPass(player);
 
     //Connection section
     connection = new WebSocketManager.Connection("ws://localhost:5000/server");
@@ -856,7 +861,7 @@ function update() {
             p.pass = player.pass;
             p.opponentPass = player.opponentPass;
             let other = players.find(p => p.id !== player.id);
-            p.opCards = (other)?other.cards : null;
+            p.opCards = (other)?other.cards : [];
             //TODO and other update stuff
             if (connection.socket.readyState == 1) {
                 connection.invoke("Update", p.id, JSON.stringify(p));
@@ -875,6 +880,7 @@ function Player() {
     this.turn = false;
     this.pass = false;
     this.opponentPass = false;
+
 }
 function Card() {
     this.image = "";
