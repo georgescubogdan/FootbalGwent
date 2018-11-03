@@ -783,16 +783,17 @@ function applyPower(players, power) {
     // 0 - BUFF TOTI JUCATORII DE PE TEREN
     if (power.tip === 0) {
         player.cards.forEach(c => {
-            c.attack += 1;
-            c.defense += 1;
+            c.attack += power.val_atk;
+            c.defense += power.val_def;
         });
     }
 
     // 1 - BUFF TOTI JUCATORII DE PE O LINIE
     if (power.tip === 1) {
         player.cards.forEach(c => {
-            if (c.pos === 4) {
-                c.attack += 3;
+            if (c.pos === power.argument) {
+                c.attack += power.val_atk;
+                c.defense += power.val_def;
             }
         });
     } 
@@ -801,9 +802,9 @@ function applyPower(players, power) {
     // 2 - BUFF TOTI JUCATORII DE PE TEREN APARTINAND ACELEASI TARI
     if (power.tip === 2) {
         player.cards.forEach(c => {
-            if (c.country === "England") {
-                c.attack += 2;
-                c.defense += 2;
+            if (c.country === power.argument) {
+                c.attack += power.val_atk;
+                c.defense += power.val_def;
             }
         });
     }
@@ -811,18 +812,18 @@ function applyPower(players, power) {
     // 3 - BUFF TOTI JUCATORII DE PE TEREN APARTINAND ACELEASI ECHIPE
     if (power.tip === 3) {
         player.cards.forEach(c => {
-            if (c.fc === "Liverpool") {
-                c.attack += 3;
-                c.defense += 3;
+            if (c.fc === power.argument) {
+                c.attack += power.val_atk;
+                c.defense += power.val_def;
             }
         });
     }
 
-    // 4 - BUFF TOTI JUCATORII DE PE TEREN CE INDEPLINESC O ANUMITA CONDITIE
+    // 4 - BUFF TOTI JUCATORII DE PE TEREN CE INDEPLINESC O ANUMITA CONDITIE(atk < argument)
     if (power.tip === 4) {
         player.cards.forEach(c => {
-            if (c.attack <= 4) {
-                c.attack *= 2;
+            if (c.attack <= power.argument) {
+                c.attack *= power.val_atk;
             }
         });
     }
@@ -830,9 +831,9 @@ function applyPower(players, power) {
     // 5 - BUFF TOTI JUCATORII CE JOACA UN ANUMIT ROL(ex: portar)
     if (power.tip === 5) {
         player.cards.forEach(c => {
-            if (c.tip == 0) {
-                c.defense *= 3;
-                c.attack += 2;
+            if (c.tip == power.argument) {
+                c.attack *= power.val_atk;
+                c.defense *= power.val_def;
             }
         });
     }
@@ -843,9 +844,9 @@ function applyPower(players, power) {
             p => {
                 if (p.id !== connection.connectionId) {
                     p.cards.forEach(c => {
-                        if (c.pos === 4) {
-                            c.attack -= 2;
-                            c.defense -= 2;
+                        if (c.pos === power.argument) {
+                            c.attack -= power.val_atk;
+                            c.defense -= power.val_def;
                         }
                     });
                 }
@@ -858,22 +859,22 @@ function applyPower(players, power) {
             p => {
                 if (p.id !== connection.connectionId) {
                     p.cards.forEach(c => {
-                        c.attack -= 2;
-                        c.defense -= 2;
+                        c.attack -= val_atk;
+                        c.defense -= val_def;
                     });
                 }
             });
     }
 
-    // 8 - ELIMINA TOTI JUCATORII ADVERSI CE INDEPLINESC O ANUMITA CONDITIE
+    // 8 - DEBUFF TOTI JUCATORII ADVERSI DINTR-O ANUMITA TARA
     if (power.tip === 8) {
         players.forEach(
             p => {
                 if (p.id !== connection.connectionId) {
                     p.cards.forEach(c => {
-                        if (c.defense <= 4) {
-                            c.attack -= 2;
-                            c.defense = 1;
+                        if (c.country === power.argument) {
+                            c.attack -= power.val_atk;
+                            c.defense = power.val_def;
                         }
                     });
                 }
