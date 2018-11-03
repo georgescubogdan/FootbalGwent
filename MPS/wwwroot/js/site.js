@@ -307,9 +307,7 @@ const game = {
         this.modalContent = document.querySelector(".select-items");
         this.generatePlayers(receivedPlayers);
         const generatedPlayers = document.querySelectorAll(".select-items .player");
-
         this.asignClicks(generatedPlayers, "selected-player", "players");
-
         this.myAttackLine = document.querySelector(".field .me .attack-line");
         this.myMiddleLine = document.querySelector(".field .me .middle-line");
         this.myDefenseLine = document.querySelector(".field .me .defense-line");
@@ -529,6 +527,9 @@ const game = {
           <div class="fc">
             ${item.fc}
           </div>
+          <div class="tip">
+              ${item.tip}
+          </div>
           <div class="stats">
             <div class="attack">
               <span>${item.attack}</span>
@@ -611,7 +612,7 @@ const game = {
         c.defense = Number(div.querySelector(".defense span").innerHTML);
         c.fc = div.querySelector(".fc").innerHTML;
         c.country = div.querySelector(".country").innerHTML;
-        c.tip = 0;
+        c.tip = Number(div.querySelector(".tip").innerHTML);
         c.pos = pos;
 
         return c;
