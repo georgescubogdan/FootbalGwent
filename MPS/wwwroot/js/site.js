@@ -339,6 +339,9 @@ const game = {
         this.enemyMiddleLineScore = document.querySelector(".field .enemy .middle-line .line-score");
         this.enemyDefenseLineScore = document.querySelector(".field .enemy .defense-line .line-score");
         this.enemyGoalkeeperLineScore = document.querySelector(".field .enemy .goalkeeper-line .line-score");
+
+        this.passBtn = document.querySelector("#pass");
+        //this.passBtn.onclick = () => this.pressPass();
     },
 
     asignClicks(arr, activeItemClass, itemsName) {
@@ -711,7 +714,7 @@ const game = {
         info.forEach(player => {
             if (player.id === currPlayerId) {
                 const { myAttackLine, myMiddleLine, myDefenseLine, myGoalkeeperLine } = this;
-                
+
                 myAttCardsPlace = myAttackLine.querySelector(".cards-place");
                 myAttScore = myAttackLine.querySelector(".line-score");
 
@@ -741,7 +744,7 @@ const game = {
                         putOnFieldByPos(myAttCardsPlace, myMidCardsPlace, myDefCardsPlace, myGkCardsPlace, card.pos, cardDiv);
                     });
                 }
-            } else {
+
                 const { enemyAttackLine, enemyMiddleLine, enemyDefenseLine, enemyGoalkeeperLine } = this;
                 enemyAttCardsPlace = enemyAttackLine.querySelector(".cards-place");
                 enemyAttScore = enemyAttackLine.querySelector(".line-score");
@@ -760,7 +763,7 @@ const game = {
                 enemyDefCardsPlace.innerHTML = "";
                 enemyGkCardsPlace.innerHTML = "";
 
-                if (player.cards.length > 0) {
+                if (player.opCards.length > 0) {
                     player.cards.forEach(card => {
                         let cardDiv;
                         if (!card.fc && !card.country) {
