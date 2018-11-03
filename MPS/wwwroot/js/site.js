@@ -778,8 +778,6 @@ function applyPower(players, power) {
         });
     }
 
-    // TODO: argumente pentru power cards?
-
     // 0 - BUFF TOTI JUCATORII DE PE TEREN
     if (power.tip === 0) {
         player.cards.forEach(c => {
@@ -798,7 +796,6 @@ function applyPower(players, power) {
         });
     } 
     
-
     // 2 - BUFF TOTI JUCATORII DE PE TEREN APARTINAND ACELEASI TARI
     if (power.tip === 2) {
         player.cards.forEach(c => {
@@ -824,6 +821,7 @@ function applyPower(players, power) {
         player.cards.forEach(c => {
             if (c.attack <= power.argument) {
                 c.attack *= power.val_atk;
+                c.defense *= power.val_def;
             }
         });
     }
@@ -880,6 +878,16 @@ function applyPower(players, power) {
                 }
             });
     }
+
+    // 9 - BUFF TOTI JUCATORII DE PE LINIA SELECTATA
+    if (power.tip === 9) {
+        player.cards.forEach(c => {
+            if (c.pos === power.pos) {
+                c.attack += power.val_atk;
+                c.defense += power.val_def;
+            }
+        });
+    } 
 }
 var date = {
     "carte": [
