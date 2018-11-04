@@ -866,21 +866,41 @@ window.onload = function () {
     //Card randomize section
     let cards = [];
     for (let i = 0; i < 20; i++) {
-        let newCard = date.carte[Math.floor(Math.random() * date.carte.length)];
+        let id = Math.floor(Math.random() * date.carte.length);
+        let newCard = date.carte[id];
+
+        /*
         while (cards.filter(c => c.name === newCard.name).length > 0) 
         {
             newCard = date.carte[Math.floor(Math.random() * date.carte.length)];
         }
+        */
+        newCard.image = "../images/jucatori_poze/" + (id+1) + "_jucator.jpg";
         cards.push(newCard);
     }
     receivedPlayers = cards;
 
+    cards = [];
+    for (let i = 0; i < 20; i++) {
+        let id = Math.floor(Math.random() * date.power.length);
+        let newCard = date.power[id];
+        cards.push(newCard);
+    }
+    receivedFunctionalities = cards;
+
+    cards = [];
+    for (let i = 0; i < 5; i++) {
+        let id = Math.floor(Math.random() * date.coach.length);
+        let newCard = date.coach[id];
+        cards.push(newCard);
+    }
+    receivedLeaders = cards;
 
     game.init();
     game.passBtn.onclick = () => game.pressPass(player);
 
     //Connection section
-    connection = new WebSocketManager.Connection("ws://192.168.1.132:5000/server");
+    connection = new WebSocketManager.Connection("ws://localhost:5000/server");
 
     connection.connectionMethods.onConnected = () => {
         player.id = connection.connectionId;
@@ -1422,7 +1442,7 @@ var date = {
     ],
     "power": [
         {
-            "image": "https://placehold.it/200x200",
+            "image": "../images/Efecte/Untitled_Diagram.jpg",
             "name": "cox",
             "description": "50$/gr",
             "tip": "0",
@@ -1431,7 +1451,7 @@ var date = {
     ],
     "coach": [
         {
-            "image": "https://placehold.it/200x200",
+            "image": "../images/antrenori_poze/1_antrenor.jpg",
             "name": "hagi",
             "passive": "0",
             "descpassive": "ai n-ai mingea dai la poarta",
