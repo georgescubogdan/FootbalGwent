@@ -323,13 +323,6 @@ const game = {
         this.myDefenseLine.onclick = () => this.putClickedCardOnField(this.myDefenseLine);
         this.myGoalkeeperLine.onclick = () => this.putClickedCardOnField(this.myGoalkeeperLine);
 
-        /*
-            window.onclick = (e) => {
-              if (e.target == this.modal) {
-                this.modal.classList.remove("modal-active");
-              }
-            }*/
-
         this.enemyAttackLine = document.querySelector(".field .enemy .attack-line");
         this.enemyMiddleLine = document.querySelector(".field .enemy .middle-line");
         this.enemyDefenseLine = document.querySelector(".field .enemy .defense-line");
@@ -572,6 +565,17 @@ const game = {
         })
     },
 
+    sendCoach() {
+        coachDiv = document.querySelector(".info .me .leader");
+
+        if (coachDiv) {
+            return this.generateCoachObj(coachDiv);
+        } else {
+            return null;
+        }
+
+    },
+
     sendCardsFromField() {
         const cards = [];
 
@@ -627,6 +631,20 @@ const game = {
         return cards;
     },
 
+    generateCoachObj(div) {
+        const c = new Coach();
+
+        c.image = div.querySelector(".photo img").src;
+        c.name = div.querySelector(".name").innerHTML;
+        c.description = div.querySelector(".description").innerHTML;;
+        c.active = 0;
+        c.passive = 0;
+        c.descpassive = "";
+        c.descactive = "";
+
+        return c;
+    },
+
     generatePlayerobj(div, pos) {
         const c = new Card();
 
@@ -652,18 +670,6 @@ const game = {
         p.pos = pos;
 
         return p;
-    },
-
-    generateLeaderObj(div) {
-        const c = new Coach();
-
-        c.image = div.querySelector(".photo img").src;
-        c.name = div.querySelector(".name").innerHTML;
-        c.description = div.querySelector(".description").innerHTML;
-        this.active = 0;
-        this.passive = 0;
-        this.descpassive = "";
-        this.descactive = "";
     },
 
     generatePlayerCardFromObj(obj) {
@@ -722,6 +728,26 @@ const game = {
         return func;
     },
 
+    generateCoachCardFromObj(obj) {
+        const c = document.createElement("div");
+        c.classList.add("card", "leader");
+        c.innerHTML = `
+        <div class="photo">
+          <img src=${obj.image} alt="leader photo">
+        </div>
+        <div class="information">
+          <div class="name">
+            ${obj.name}
+          </div>
+          <div class="description">
+            ${obj.description}
+          </div>
+        </div>
+        `;
+
+        return c;
+    },
+
     putOnFieldByPos(attDiv, midDiv, defDiv, gkDiv, pos, cardDiv) {
         if (pos === 1) {
             gkDiv.appendChild(cardDiv);
@@ -764,7 +790,23 @@ const game = {
         }
     },
 
+    generateCoachFromBlob(info, currPlayerId) {
+        info.forEach(player => {
+            if (player.id !== currPlayerId) {
+                if (player.coach !== null) {
+                    const enemyCoachPlace = document.querySelector(".info .enemy .leader-place");
+                    if (enemyCoachPlace.innerHTML === "") {
+                        const coachDiv = this.generateCoachCardFromObj(player.coach);
+                        enemyCoachPlace.appendChild(coachDiv);
+                    }
+                }
+            }
+        });
+    },
+
     generateCardsOnFieldFromBlob(info, currPlayerId) {
+        this.generateCoachFromBlob(info, currPlayerId);
+
         info.forEach(player => {
             if (player.id === currPlayerId) {
                 const { myAttackLine, myMiddleLine, myDefenseLine, myGoalkeeperLine } = this;
@@ -824,6 +866,7 @@ const game = {
 
     //TODO implement pass button logic
     pressPass(player) {
+        this.setEnemyPassed(false);
         player.pass = true;
         pass = true;
     },
@@ -857,6 +900,55 @@ const game = {
             Number(this.enemyDefenseLineScore.innerHTML) +
             Number(this.enemyGoalkeeperLineScore.innerHTML);
         return sum;
+    },
+
+    //sets the round field to @nr
+    setRound(nr) {
+        const span = document.querySelector(".match-info .round-number span");
+        span.innerHTML = nr;
+    },
+
+    setMyCurrentScore() {
+        const span = document.querySelector(".match-info .my-current-score span");
+        span.innerHTML = this.getMyTotalSum();
+    },
+
+    setEnemiesCurrentScore() {
+        const span = document.querySelector(".match-info .enemy-current-score span");
+        span.innerHTML = this.getEnemyTotalSum();
+    },
+
+    incrementMyRoundsWon() {
+        const span = document.querySelector(".match-info .my-rounds-won span");
+        span.innerHTML = Number(span.innerHTML) + 1;
+    },
+
+    incrementEnemiesRoundsWon() {
+        const span = document.querySelector(".match-info .enemy-rounds-won span");
+        span.innerHTML = Number(span.innerHTML) + 1;
+    },
+
+    setTurn(whose) {
+        const span = document.querySelector(".match-info .info-for-turns span");
+        if (whose === "my") {
+            span.innerHTML = "your";
+        } else {
+            span.innerHTML = "your enemy's";
+        }
+    },
+
+    setWinner(name) {
+        const span = document.querySelector(".match-info .winner span");
+        span.innerHTML = name;
+    },
+
+    setEnemyPassed(val) {
+        const span = document.querySelector(".match-info .enemy-passed span");
+        if (val === true) {
+            span.innerHTML = "passed";
+        } else {
+            span.innerHTML = "is still playing";
+        }
     }
 }
 var player;
@@ -952,19 +1044,25 @@ function checkRoundOrMatchFinish() {
             players.find(p => p.id !== player.id).score++;
         }
         if (player.score === 2) {
-            alert("You won the match, bro!");
+            setWinner("You, bro!");
+            //alert("You won the match, bro!");
             player.matchFinish = true;
         } else if (players.find(p => p.id !== player.id).score === 2) {
-            alert("You lost the match, bro!");
+            setWinner("Not you, bro!");
+            //alert("You lost the match, bro!");
             player.matchFinish = true;
         } else {
             if (mySum > enemySum) {
-                alert("You won this round, bro!");
+                game.incrementMyRoundsWon();
+                //alert("You won this round, bro!");
                 player.turn = true;
             } else if (mySum == enemySum) {
-                alert("You equaled this round, bro!");
+                game.incrementMyRoundsWon();
+                game.incrementEnemiesRoundsWon();
+               // alert("You equaled this round, bro!");
             } else {
-                alert("You lost this round, bro!");
+                //alert("You lost this round, bro!");
+                game.incrementEnemiesRoundsWon();
                 player.turn = false;
             }
             //TODO sa se curete boardul si sa se elimine cartile
@@ -973,7 +1071,7 @@ function checkRoundOrMatchFinish() {
             pass = false;
             player.opponentPass = false;
             update();
-            game.resetLineScores()
+            game.resetLineScores();
         }
         
     }
@@ -986,9 +1084,17 @@ function update() {
     //if (connection.socket.readyState == 1) {
     //    connection.invoke("Update", connection.connectionId, JSON.stringify(player));
     //}
+    player.coach = game.sendCoach();
     checkRoundOrMatchFinish();
     const myTotalScore = game.getMyTotalSum();
     const enemyTotalScore = game.getEnemyTotalSum();
+    game.setEnemiesCurrentScore();
+    game.setMyCurrentScore();
+    let totalScore = 0;
+    players.forEach(p => {
+        totalScore += p.score;
+    });
+    game.setRound(totalScore + 1);
     console.log("MY SCORE " + myTotalScore);
     console.log("ENEMY SCORE " + enemyTotalScore);
 
@@ -999,6 +1105,8 @@ function update() {
            // p.score = player.score;
            // p.roundCount = player.roundCount;
            // p.turn = player.turn;
+            game.setTurn(p.turn === true ? "my" : "");
+
             p.pass = player.pass;
             p.opponentPass = player.opponentPass;
             let other = players.find(p => p.id !== player.id);
