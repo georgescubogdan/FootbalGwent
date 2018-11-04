@@ -204,6 +204,7 @@ let receivedPlayers = [
         defense: 4
     }
 ]
+
 let receivedFunctionalities = [
     {
         "image": "https://placehold.it/200x200",
@@ -648,7 +649,7 @@ const game = {
         p.image = div.querySelector(".photo img").src;
         p.name = div.querySelector(".name").innerHTML;
         p.description = div.querySelector(".description").innerHTML;
-        p.tip = 0;
+        p.tip = Number(div.querySelector(".tip").innerHTML);
         p.pos = pos;
 
         return p;
@@ -1044,6 +1045,9 @@ function Power() {
     this.description = "";
     this.tip = 0;
     this.pos = 0;
+    this.argument = "";
+    this.val_atk = 0;
+    this.val_def = 0;
 }
 function Coach() {
     this.image = "";

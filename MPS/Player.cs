@@ -38,6 +38,9 @@ namespace MPS
         public string description { get; set; }
         public int tip { get; set; }
         public int pos { get; set; }
+        public string argument { get; set; }
+        public int val_atk { get; set; }
+        public int val_def { get; set; }
     }
 
     public class Coach
