@@ -1071,7 +1071,7 @@ function keyPush(evt) {
     }
 }
 
-function applyPower(players, power) {
+function applyPower(power) {
     // EXEMPLE
     // 0 - BUFF TOTI JUCATORII DE PE TEREN
     if (power.tip === 0) {
