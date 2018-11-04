@@ -943,7 +943,7 @@ const game = {
     },
 
     setEnemyPassed(val) {
-        const span = document.querySelector(".match-info .winner span");
+        const span = document.querySelector(".match-info .enemy-passed span");
         if (val === true) {
             span.innerHTML = "passed";
         } else {
