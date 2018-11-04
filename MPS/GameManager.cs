@@ -14,9 +14,11 @@ namespace MPS
 
         private static GameManager instance;
         private static readonly object padLock = new object();
-        public ConcurrentDictionary<string, Snake> Snakes { get; set; }
+       // public ConcurrentDictionary<string, Snake> Snakes { get; set; }
+        public ConcurrentDictionary<string, Player> Players { get; set; }
         public Timer Timer;
-        private SnakeHandler _snakeHandler;
+        //private SnakeHandler _snakeHandler;
+        private PlayerHandler _playerHandler;
         public static GameManager Instance
         {
             get
@@ -28,24 +30,17 @@ namespace MPS
             }
         }
 
-        public void Initilize(SnakeHandler snakeHandler)
+        public void Initilize(PlayerHandler playerHandler)
         {
-            _snakeHandler = snakeHandler;
-            Snakes = new ConcurrentDictionary<string, Snake>();
-            Timer = new Timer(Callback, null, 0, 1000 / 15);
+            _playerHandler = playerHandler;
+            Players = new ConcurrentDictionary<string, Player>();
+            Timer = new Timer(Callback, null, 0, 50);
         }
 
         private void Callback(object state)
         {
-            var listOfSnakes = JsonConvert.SerializeObject(Snakes.Values);
-            //var a = Startup.ServiceProvider;
-            //var b = a.GetService<SnakeHandler>();
-            //var c = b.InvokeClientMethodToAllAsync("pingSnakes", listOfSnakes);
-            //c.Wait();
-            _snakeHandler.InvokeClientMethodToAllAsync("pingSnakes", listOfSnakes).Wait();
-            //Startup.ServiceProvider.GetRequiredService<SnakeHandler>()
-            //    .InvokeClientMethodToAllAsync("pingSnakes", listOfSnakes)
-            //    .Wait();
+            var listOfPlayers = JsonConvert.SerializeObject(Players.Values);
+            _playerHandler.InvokeClientMethodToAllAsync("pingPlayers", listOfPlayers).Wait();
         }
 
     }
