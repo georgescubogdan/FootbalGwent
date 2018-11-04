@@ -206,54 +206,54 @@ let receivedPlayers = [
 ]
 let receivedFunctionalities = [
     {
-        image: "https://placehold.it/200x200",
-        name: "Functionality name",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil perspiciatis ipsum quos non delectus iure vitae cumque inventore autem assumenda, aperiam magnam architecto suscipit blanditiis facere modi aut id ea."
+        "image": "https://placehold.it/200x200",
+        "name": "La atac!",
+        "description": "Intreaga echipa se va concentra pe ofensiva, rezultand in +2 la atacul tuturor jucatorilor",
+        "tip": "0",
+        "pos": "0",
+        "argument": "0",
+        "val_atk": "2",
+        "val_def": "0"
     },
     {
-        image: "https://placehold.it/200x200",
-        name: "Functionality name",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil perspiciatis ipsum quos non delectus iure vitae cumque inventore autem assumenda, aperiam magnam architecto suscipit blanditiis facere modi aut id ea."
+        "image": "https://placehold.it/200x200",
+        "name": "La atac!",
+        "description": "Intreaga echipa se va concentra pe ofensiva, rezultand in +2 la atacul tuturor jucatorilor",
+        "tip": "0",
+        "pos": "0",
+        "argument": "0",
+        "val_atk": "2",
+        "val_def": "0"
     },
     {
-        image: "https://placehold.it/200x200",
-        name: "Functionality name",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil perspiciatis ipsum quos non delectus iure vitae cumque inventore autem assumenda, aperiam magnam architecto suscipit blanditiis facere modi aut id ea."
+        "image": "https://placehold.it/200x200",
+        "name": "La atac!",
+        "description": "Intreaga echipa se va concentra pe ofensiva, rezultand in +2 la atacul tuturor jucatorilor",
+        "tip": "0",
+        "pos": "0",
+        "argument": "0",
+        "val_atk": "2",
+        "val_def": "0"
     },
     {
-        image: "https://placehold.it/200x200",
-        name: "Functionality name",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil perspiciatis ipsum quos non delectus iure vitae cumque inventore autem assumenda, aperiam magnam architecto suscipit blanditiis facere modi aut id ea."
+        "image": "https://placehold.it/200x200",
+        "name": "La atac!",
+        "description": "Intreaga echipa se va concentra pe ofensiva, rezultand in +2 la atacul tuturor jucatorilor",
+        "tip": "0",
+        "pos": "0",
+        "argument": "0",
+        "val_atk": "2",
+        "val_def": "0"
     },
     {
-        image: "https://placehold.it/200x200",
-        name: "Functionality name",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil perspiciatis ipsum quos non delectus iure vitae cumque inventore autem assumenda, aperiam magnam architecto suscipit blanditiis facere modi aut id ea."
-    },
-    {
-        image: "https://placehold.it/200x200",
-        name: "Functionality name",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil perspiciatis ipsum quos non delectus iure vitae cumque inventore autem assumenda, aperiam magnam architecto suscipit blanditiis facere modi aut id ea."
-    },
-    {
-        image: "https://placehold.it/200x200",
-        name: "Functionality name",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil perspiciatis ipsum quos non delectus iure vitae cumque inventore autem assumenda, aperiam magnam architecto suscipit blanditiis facere modi aut id ea."
-    },
-    {
-        image: "https://placehold.it/200x200",
-        name: "Functionality name",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil perspiciatis ipsum quos non delectus iure vitae cumque inventore autem assumenda, aperiam magnam architecto suscipit blanditiis facere modi aut id ea."
-    },
-    {
-        image: "https://placehold.it/200x200",
-        name: "Functionality name",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil perspiciatis ipsum quos non delectus iure vitae cumque inventore autem assumenda, aperiam magnam architecto suscipit blanditiis facere modi aut id ea."
-    },
-    {
-        image: "https://placehold.it/200x200",
-        name: "Functionality name",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil perspiciatis ipsum quos non delectus iure vitae cumque inventore autem assumenda, aperiam magnam architecto suscipit blanditiis facere modi aut id ea."
+        "image": "https://placehold.it/200x200",
+        "name": "La atac!",
+        "description": "Intreaga echipa se va concentra pe ofensiva, rezultand in +2 la atacul tuturor jucatorilor",
+        "tip": "0",
+        "pos": "0",
+        "argument": "0",
+        "val_atk": "2",
+        "val_def": "0"
     }
 ]
 let receivedLeaders = [
@@ -630,7 +630,7 @@ const game = {
     generatePlayerobj(div, pos) {
         const c = new Card();
 
-        c.image = div.querySelector(".photo img").src;
+        //TODO c.image = div.querySelector(".photo img").src;
         c.name = div.querySelector(".name").innerHTML;
         c.attack = Number(div.querySelector(".attack span").innerHTML);
         c.defense = Number(div.querySelector(".defense span").innerHTML);
@@ -859,28 +859,47 @@ const game = {
         return sum;
     }
 }
+
 var player;
 var players = [];
+
 window.onload = function () {
     player = new Player();
     //Card randomize section
     let cards = [];
     for (let i = 0; i < 20; i++) {
-        let newCard = date.carte[Math.floor(Math.random() * date.carte.length)];
+        id = Math.floor(Math.random() * date.carte.length);
+        let newCard = date.carte[id];
+
         while (cards.filter(c => c.name === newCard.name).length > 0) 
         {
             newCard = date.carte[Math.floor(Math.random() * date.carte.length)];
         }
+
+        newCard.image = "https://placehold.it/200x200";
         cards.push(newCard);
     }
     receivedPlayers = cards;
 
+    //receivedFunctionalities = date.power;
+
+    /*
+    let cards2 = [];
+    for (let i = 0; i < 10; i++) {
+        let id = Math.floor(Math.random() * date.power.length);
+        let newCard = date.power[id];
+
+        newCard.image = "https://placehold.it/200x200";
+        cards2.push(newCard);
+    }
+    receivedFunctionalities = cards2;
+    */
 
     game.init();
     game.passBtn.onclick = () => game.pressPass(player);
 
     //Connection section
-    connection = new WebSocketManager.Connection("ws://192.168.1.132:5000/server");
+    connection = new WebSocketManager.Connection("ws://localhost:5000/server");
 
     connection.connectionMethods.onConnected = () => {
         player.id = connection.connectionId;
@@ -1054,30 +1073,121 @@ function keyPush(evt) {
 
 function applyPower(players, power) {
     // EXEMPLE
-    //Pentru playerul care nu suntem noi se lucreaza cu players.forEach
-    if (power.tip === -2) {
+    // 0 - BUFF TOTI JUCATORII DE PE TEREN
+    if (power.tip === 0) {
+        player.cards.forEach(c => {
+            c.attack += power.val_atk;
+            c.defense += power.val_def;
+        });
+    }
+
+    // 1 - BUFF TOTI JUCATORII DE PE O LINIE
+    if (power.tip === 1) {
+        player.cards.forEach(c => {
+            if (c.pos === power.argument) {
+                c.attack += power.val_atk;
+                c.defense += power.val_def;
+            }
+        });
+    }
+
+    // 2 - BUFF TOTI JUCATORII DE PE TEREN APARTINAND ACELEASI TARI
+    if (power.tip === 2) {
+        player.cards.forEach(c => {
+            if (c.country === power.argument) {
+                c.attack += power.val_atk;
+                c.defense += power.val_def;
+            }
+        });
+    }
+
+    // 3 - BUFF TOTI JUCATORII DE PE TEREN APARTINAND ACELEASI ECHIPE
+    if (power.tip === 3) {
+        player.cards.forEach(c => {
+            if (c.fc === power.argument) {
+                c.attack += power.val_atk;
+                c.defense += power.val_def;
+            }
+        });
+    }
+
+    // 4 - BUFF TOTI JUCATORII DE PE TEREN CE INDEPLINESC O ANUMITA CONDITIE(atk < argument)
+    if (power.tip === 4) {
+        player.cards.forEach(c => {
+            if (c.attack <= power.argument) {
+                c.attack *= power.val_atk;
+                c.defense *= power.val_def;
+            }
+        });
+    }
+
+    // 5 - BUFF TOTI JUCATORII CE JOACA UN ANUMIT ROL(ex: portar)
+    if (power.tip === 5) {
+        player.cards.forEach(c => {
+            if (c.tip == power.argument) {
+                c.attack *= power.val_atk;
+                c.defense *= power.val_def;
+            }
+        });
+    }
+
+    // 6 - DEBUFF TOTI JUCATORII ADVERSI DE PE O ANUMITA LINIE
+    if (power.tip === 6) {
         players.forEach(
             p => {
                 if (p.id !== connection.connectionId) {
                     p.cards.forEach(c => {
-                        if (c.pos === 4) {
-                            c.attack -= 3;
+                        if (c.pos === power.argument) {
+                            c.attack -= power.val_atk;
+                            c.defense -= power.val_def;
                         }
                     });
                 }
             });
     }
-    //Pentru playerul curent se lucreaza cu player
-    if (power.tip === -1) {
+
+    // 7 - DEBUFF TOTI JUCATORII ADVERSI DE PE TEREN
+    if (power.tip === 7) {
+        players.forEach(
+            p => {
+                if (p.id !== connection.connectionId) {
+                    p.cards.forEach(c => {
+                        c.attack -= val_atk;
+                        c.defense -= val_def;
+                    });
+                }
+            });
+    }
+
+    // 8 - DEBUFF TOTI JUCATORII ADVERSI DINTR-O ANUMITA TARA
+    if (power.tip === 8) {
+        players.forEach(
+            p => {
+                if (p.id !== connection.connectionId) {
+                    p.cards.forEach(c => {
+                        if (c.country === power.argument) {
+                            c.attack -= power.val_atk;
+                            c.defense = power.val_def;
+                        }
+                    });
+                }
+            });
+    }
+
+    // 9 - BUFF TOTI JUCATORII DE PE LINIA SELECTATA
+    if (power.tip === 9) {
         player.cards.forEach(c => {
-            if (c.pos === 4) {
-                c.attack += 3;
+            if (c.pos === power.pos) {
+                c.attack += power.val_atk;
+                c.defense += power.val_def;
             }
         });
     }
+}
 
-    // TODO: argumente pentru power cards?
-
+/*
+function applyPower(players, power) {
+    
     // 0 - BUFF TOTI JUCATORII DE PE TEREN
     if (power.tip === 0) {
         player.cards.forEach(c => {
@@ -1178,8 +1288,571 @@ function applyPower(players, power) {
             });
     }
 }
+*/
+
 var date = {
     "carte": [
+    /*
+        {
+            "nume": "adrian mutu",
+            "atk": "5",
+            "def": "16",
+            "club": "rapid",
+            "tara": "romania",
+            "tip": "0",
+            "pos": "0"
+        },
+        {
+            "nume": "Jordan Pickford",
+            "atk": "2",
+            "def": "8",
+            "club": "Everton",
+            "tara": "England",
+            "tip": "0",
+            "pos": "0"
+        },
+        {
+            "nume": "Kyle Walker",
+            "atk": "4",
+            "def": "7",
+            "club": "Manchester City",
+            "tara": "England",
+            "tip": "1",
+            "pos": "0"
+        },
+        {
+            "nume": "Kieran Trippier",
+            "atk": "2",
+            "def": "8",
+            "club": "Tottenham Hotspur",
+            "tara": "England",
+            "tip": "1",
+            "pos": "0"
+        },
+        {
+            "nume": "John Stones",
+            "atk": "2",
+            "def": "5",
+            "club": "Manchester City",
+            "tara": "England",
+            "tip": "1",
+            "pos": "0"
+        },
+        {
+            "nume": "Eric Dier",
+            "atk": "3",
+            "def": "5",
+            "club": "Tottenham Hotspur",
+            "tara": "England",
+            "tip": "2",
+            "pos": "0"
+        },
+        {
+            "nume": "Ross Barkley",
+            "atk": "3",
+            "def": "6",
+            "club": "Chelsea",
+            "tara": "England",
+            "tip": "2",
+            "pos": "0"
+        },
+        {
+            "nume": "Jordan Henderson",
+            "atk": "4",
+            "def": "5",
+            "club": "Liverpool",
+            "tara": "England",
+            "tip": "2",
+            "pos": "0"
+        },
+        {
+            "nume": "Harry Winks",
+            "atk": "4",
+            "def": "4",
+            "club": "Tottenham Hotspur",
+            "tara": "England",
+            "tip": "2",
+            "pos": "0"
+        },
+        {
+            "nume": "Raheem Sterling",
+            "atk": "8",
+            "def": "2",
+            "club": "Manchester City",
+            "tara": "England",
+            "tip": "3",
+            "pos": "0"
+        },
+        {
+            "nume": "Harry Kane",
+            "atk": "8",
+            "def": "4",
+            "club": "Tottenham Hotspur",
+            "tara": "England",
+            "tip": "3",
+            "pos": "0"
+        },
+        {
+            "nume": "Marcus Rashford",
+            "atk": "6",
+            "def": "2",
+            "club": "Manchester United",
+            "tara": "England",
+            "tip": "3",
+            "pos": "0"
+        },
+        {
+            "nume": "Hugo Lloris",
+            "atk": "3",
+            "def": "8",
+            "club": "Tottenham Hotspur",
+            "tara": "France",
+            "tip": "0",
+            "pos": "0"
+        },
+        {
+            "nume": "Benjamin Pavard",
+            "atk": "2",
+            "def": "6",
+            "club": "VfB Stuttgart",
+            "tara": "France",
+            "tip": "1",
+            "pos": "0",
+            "": {}
+        },
+        {
+            "nume": "Presnel Kimpembe",
+            "atk": "1",
+            "def": "7",
+            "club": "Paris Saint-Germain",
+            "tara": "France",
+            "tip": "1",
+            "pos": "0",
+            "": {}
+        },
+        {
+            "nume": "Mamadou Sakho",
+            "atk": "4",
+            "def": "5",
+            "club": "Crystal Palace",
+            "tara": "France",
+            "tip": "1",
+            "pos": "0",
+            "": {}
+        },
+        {
+            "nume": "Lucas Digne",
+            "atk": "3",
+            "def": "5",
+            "club": "Everton",
+            "tara": "France",
+            "tip": "1",
+            "pos": "0",
+            "": {}
+        },
+        {
+            "nume": "Lucas Hernández",
+            "atk": "2",
+            "def": "6",
+            "club": "Atlético Madrid",
+            "tara": "France",
+            "tip": "1",
+            "pos": "0",
+            "": {}
+        },
+        {
+            "nume": "N'Golo Kanté",
+            "atk": "4",
+            "def": "5",
+            "club": "Chelsea",
+            "tara": "France",
+            "tip": "2",
+            "pos": "0",
+            "": {}
+        },
+        {
+            "nume": "Blaise Matuidi",
+            "atk": "5",
+            "def": "6",
+            "club": "Juventus",
+            "tara": "France",
+            "tip": "2",
+            "pos": "0",
+            "": {}
+        },
+        {
+            "nume": "Tanguy Ndombele",
+            "atk": "5",
+            "def": "3",
+            "club": "Lyon",
+            "tara": "France",
+            "tip": "2",
+            "pos": "0",
+            "": {}
+        },
+        {
+            "nume": "Antoine Griezmann",
+            "atk": "7",
+            "def": "1",
+            "club": "Atlético Madrid",
+            "tara": "France",
+            "tip": "3",
+            "pos": "0",
+            "": {}
+        },
+        {
+            "nume": "Thomas Lemar",
+            "atk": "6",
+            "def": "4",
+            "club": "Atlético Madrid",
+            "tara": "France",
+            "tip": "3",
+            "pos": "0"
+        },
+        {
+            "nume": "Jack Butland",
+            "atk": "2",
+            "def": "7",
+            "club": "Stoke City",
+            "tara": "England",
+            "tip": "0",
+            "pos": "0"
+        },
+        {
+            "nume": "Joe Gomez",
+            "atk": "4",
+            "def": "5",
+            "club": "Liverpool",
+            "tara": "England",
+            "tip": "1",
+            "pos": "0"
+        },
+        {
+            "nume": "Trent Alexander-Arnold",
+            "atk": "3",
+            "def": "6",
+            "club": "Liverpool",
+            "tara": "England",
+            "tip": "1",
+            "pos": "0"
+        },
+        {
+            "nume": "James Maddison",
+            "atk": "3",
+            "def": "5",
+            "club": "Leicester City",
+            "tara": "England",
+            "tip": "2",
+            "pos": "0"
+        },
+        {
+            "nume": "Olivier Giroud",
+            "atk": "5",
+            "def": "3",
+            "club": "Chelsea",
+            "tara": "France",
+            "tip": "3",
+            "pos": "0"
+        },
+        {
+            "nume": "Steve Mandanda",
+            "atk": "3",
+            "def": "6",
+            "club": "Marseille",
+            "tara": "France",
+            "tip": "0",
+            "pos": "0"
+        },
+        {
+            "nume": "Paul Pogba",
+            "atk": "5",
+            "def": "5",
+            "club": "Manchester United",
+            "tara": "France",
+            "tip": "2",
+            "pos": "0"
+        },
+        {
+            "nume": "Raphaël Varane",
+            "atk": "1",
+            "def": "8",
+            "club": "Real Madrid",
+            "tara": "France",
+            "tip": "1",
+            "pos": "0"
+        },
+        {
+            "nume": "Manuel Neuer",
+            "atk": "3",
+            "def": "9",
+            "club": "Bayern Munich",
+            "tara": "Germany",
+            "tip": "0",
+            "pos": "0"
+        },
+        {
+            "nume": "Marc-André ter Stegen",
+            "atk": "2",
+            "def": "6",
+            "club": "Barcelona",
+            "tara": "Germany",
+            "tip": "0",
+            "pos": "0"
+        },
+        {
+            "nume": "Mats Hummels",
+            "atk": "2",
+            "def": "5",
+            "club": "Bayern Munich",
+            "tara": "Germany",
+            "tip": "1",
+            "pos": "0"
+        },
+        {
+            "nume": "Niklas Süle",
+            "atk": "2",
+            "def": "7",
+            "club": "Bayern Munich",
+            "tara": "Germany",
+            "tip": "1",
+            "pos": "0"
+        },
+        {
+            "nume": "Thilo Kehrer",
+            "atk": "1",
+            "def": "5",
+            "club": "Paris Saint-Germain",
+            "tara": "Germany",
+            "tip": "1",
+            "pos": "0"
+        },
+        {
+            "nume": "Nico Schulz",
+            "atk": "3",
+            "def": "8",
+            "club": "1899 Hoffenheim",
+            "tara": "Germany",
+            "tip": "1",
+            "pos": "0"
+        },
+        {
+            "nume": "Serge Gnabry",
+            "atk": "4",
+            "def": "4",
+            "club": "Bayern Munich",
+            "tara": "Germany",
+            "tip": "2",
+            "pos": "0"
+        },
+        {
+            "nume": "Toni Kroos",
+            "atk": "4",
+            "def": "5",
+            "club": "Real Madrid",
+            "tara": "Germany",
+            "tip": "2",
+            "pos": "0"
+        },
+        {
+            "nume": "Emre Can",
+            "atk": "6",
+            "def": "4",
+            "club": "Juventus",
+            "tara": "Germany",
+            "tip": "2",
+            "pos": "0"
+        },
+        {
+            "nume": "Leroy Sané",
+            "atk": "5",
+            "def": "5",
+            "club": "Manchester City",
+            "tara": "Germany",
+            "tip": "2",
+            "pos": "0"
+        },
+        {
+            "nume": "Julian Brandt",
+            "atk": "3",
+            "def": "4",
+            "club": "Bayer Leverkusen",
+            "tara": "Germany",
+            "tip": "2",
+            "pos": "0"
+        },
+        {
+            "nume": "Jonas Hector",
+            "atk": "3",
+            "def": "8",
+            "club": "1. FC Köln",
+            "tara": "Germany",
+            "tip": "1",
+            "pos": "0"
+        },
+        {
+            "nume": "Timo Werner",
+            "atk": "8",
+            "def": "2",
+            "club": "RB Leipzig",
+            "tara": "Germany",
+            "tip": "3",
+            "pos": "0"
+        },
+        {
+            "nume": "Thomas Müller",
+            "atk": "8",
+            "def": "4",
+            "club": "Bayern Munich",
+            "tara": "Germany",
+            "tip": "3",
+            "pos": "0"
+        },
+        {
+            "nume": "Mark Uth",
+            "atk": "6",
+            "def": "3",
+            "club": "Schalke 04",
+            "tara": "Germany",
+            "tip": "3",
+            "pos": "0"
+        },
+        {
+            "nume": "Iker Casillas",
+            "atk": "3",
+            "def": "9",
+            "club": "Porto",
+            "tara": "Spain",
+            "tip": "0",
+            "pos": "0"
+        },
+        {
+            "nume": "David de Gea",
+            "atk": "2",
+            "def": "7",
+            "club": "Manchester United",
+            "tara": "Spain",
+            "tip": "0",
+            "pos": "0"
+        },
+        {
+            "nume": "Sergio Ramos",
+            "atk": "4",
+            "def": "8",
+            "club": "Real Madrid",
+            "tara": "Spain",
+            "tip": "1",
+            "pos": "0"
+        },
+        {
+            "nume": "Raúl Albiol",
+            "atk": "3",
+            "def": "8",
+            "club": "Napoli",
+            "tara": "Spain",
+            "tip": "1",
+            "pos": "0"
+        },
+        {
+            "nume": "César Azpilicueta",
+            "atk": "3",
+            "def": "7",
+            "club": "Chelsea",
+            "tara": "Spain",
+            "tip": "1",
+            "pos": "0"
+        },
+        {
+            "nume": "Nacho",
+            "atk": "2",
+            "def": "5",
+            "club": "Real Madrid",
+            "tara": "Spain",
+            "tip": "1",
+            "pos": "0"
+        },
+        {
+            "nume": "José Luis Gayà",
+            "atk": "4",
+            "def": "5",
+            "club": "Valencia",
+            "tara": "Spain",
+            "tip": "1",
+            "pos": "0"
+        },
+        {
+            "nume": "Sergio Busquets",
+            "atk": "6",
+            "def": "5",
+            "club": "Barcelona",
+            "tara": "Spain",
+            "tip": "2",
+            "pos": "0"
+        },
+        {
+            "nume": "Koke",
+            "atk": "4",
+            "def": "5",
+            "club": "Atlético Madrid",
+            "tara": "Spain",
+            "tip": "2",
+            "pos": "0"
+        },
+        {
+            "nume": "Thiago",
+            "atk": "6",
+            "def": "3",
+            "club": "Bayern Munich",
+            "tara": "Spain",
+            "tip": "2",
+            "pos": "0"
+        },
+        {
+            "nume": "Marco Asensio",
+            "atk": "3",
+            "def": "3",
+            "club": "Real Madrid",
+            "tara": "Spain",
+            "tip": "2",
+            "pos": "0"
+        },
+        {
+            "nume": "Saúl",
+            "atk": "5",
+            "def": "5",
+            "club": "Atlético Madrid",
+            "tara": "Spain",
+            "tip": "2",
+            "pos": "0"
+        },
+        {
+            "nume": "Álvaro Morata",
+            "atk": "6",
+            "def": "4",
+            "club": "Chelsea",
+            "tara": "Spain",
+            "tip": "3",
+            "pos": "0"
+        },
+        {
+            "nume": "Paco Alcácer",
+            "atk": "7",
+            "def": "4",
+            "club": "Borussia Dortmund",
+            "tara": "Spain",
+            "tip": "3",
+            "pos": "0"
+        },
+        {
+            "nume": "Rodrigo",
+            "atk": "8",
+            "def": "2",
+            "club": "Valencia",
+            "tara": "Spain",
+            "tip": "3",
+            "pos": "0"
+        }
+        */
+        
         {
             "image": "https://placehold.it/200x200",
             "name": "adrian mutu",
@@ -1333,7 +2006,7 @@ var date = {
             "": {}
         },
         {
-            "image": "https://placehold.it/200x200",
+            "image": "https://.it / 200x200",
             "name": "Mamadou Sakho",
             "attack": "4",
             "defense": "5",
@@ -1419,14 +2092,224 @@ var date = {
             "tip": "3",
             "pos": "0"
         }
+        //*/
     ],
     "power": [
         {
-            "image": "https://placehold.it/200x200",
-            "name": "cox",
-            "description": "50$/gr",
+            "nume": "La atac!",
+            "desc": "Intreaga echipa se va concentra pe ofensiva, rezultand in +2 la atacul tuturor jucatorilor.",
             "tip": "0",
-            "pos": "0"
+            "pos": "0",
+            "argument": "0",
+            "val_atk": "2",
+            "val_def": "0"
+        },
+        {
+            "nume": "In aparare!",
+            "desc": "Intreaga echipa se va concentra pe defensiva, rezultand in +2 la apararea tuturor jucatorilor.",
+            "tip": "0",
+            "pos": "0",
+            "argument": "0",
+            "val_atk": "0",
+            "val_def": "2"
+        },
+        {
+            "nume": "Galerie bazata!",
+            "desc": "Morala intregii echipe creste, rezultand in +1/+1 la atacul/apararea tuturor jucatorilor.",
+            "tip": "0",
+            "pos": "0",
+            "argument": "0",
+            "val_atk": "1",
+            "val_def": "1"
+        },
+        {
+            "nume": "Pe ei, bajeti!",
+            "desc": "Morala jucatorilor din atac creste, rezultand in +3/+0 la punctele fiecaruia.",
+            "tip": "1",
+            "pos": "0",
+            "argument": "4",
+            "val_atk": "3",
+            "val_def": "0"
+        },
+        {
+            "nume": "Haida la autobuz!",
+            "desc": "Morala jucatorilor din aparare creste, rezultand in +1/+3 la punctele fiecaruia.",
+            "tip": "1",
+            "pos": "0",
+            "argument": "1",
+            "val_atk": "1",
+            "val_def": "3"
+        },
+        {
+            "nume": "Vive la france!",
+            "desc": "Toti jucatorii francezi se simt motivati, rezultand in +2/+2 la punctele fiecaruia.",
+            "tip": "2",
+            "pos": "0",
+            "argument": "France",
+            "val_atk": "2",
+            "val_def": "2"
+        },
+        {
+            "nume": "Long live the Queen!",
+            "desc": "Toti jucatorii englezi se simt motivati, rezultand in +3/+1 la punctele fiecaruia.",
+            "tip": "2",
+            "pos": "0",
+            "argument": "England",
+            "val_atk": "3",
+            "val_def": "1"
+        },
+        {
+            "nume": "Atlético FTW!",
+            "desc": "Toti jucatorii de la Atlético Madrid se simt motivati, rezultand in +3/+3 la punctele fiecaruia.",
+            "tip": "3",
+            "pos": "0",
+            "argument": "Atlético Madrid",
+            "val_atk": "3",
+            "val_def": "3"
+        },
+        {
+            "nume": "Tottenham RULZ!",
+            "desc": "Toti jucatorii de la Tottenham Hotspur se simt motivati, rezultand in +5/+1 la punctele fiecaruia.",
+            "tip": "3",
+            "pos": "0",
+            "argument": "Tottenham Hotspur",
+            "val_atk": "5",
+            "val_def": "1"
+        },
+        {
+            "nume": "Hai Gigele, inscriem si noi pana inchid astia la nonstop?",
+            "desc": "Toti jucatorii cu mai putin de 4 puncte la atac se simt motivati, rezultand in dublarea punctelor de atac.",
+            "tip": "4",
+            "pos": "0",
+            "argument": "4",
+            "val_atk": "2",
+            "val_def": "1"
+        },
+        {
+            "nume": "Haida mai defensiv ca oricum castigam!",
+            "desc": "Toti jucatorii cu mai putin de 5 puncte la aparare se simt motivati, rezultand in dublarea punctelor de atac.",
+            "tip": "4",
+            "pos": "0",
+            "argument": "5",
+            "val_atk": "1",
+            "val_def": "2"
+        },
+        {
+            "nume": "La atac, bajetii!",
+            "desc": "Toti jucatorii cu rolul atacant se simt motivati, rezultand in triplarea punctelor de atac.",
+            "tip": "5",
+            "pos": "0",
+            "argument": "4",
+            "val_atk": "3",
+            "val_def": "1"
+        },
+        {
+            "nume": "Haida portare, stiu ca poti!",
+            "desc": "Portarul se simte motivat, rezultand in triplarea punctelor de atac/aparare.",
+            "tip": "5",
+            "pos": "0",
+            "argument": "4",
+            "val_atk": "3",
+            "val_def": "3"
+        },
+        {
+            "nume": "Petarzi!",
+            "desc": "Jucatorii adversi din atac sunt speriati, rezultand in in -3/-1 la punctele fiecaruia.",
+            "tip": "6",
+            "pos": "0",
+            "argument": "4",
+            "val_atk": "3",
+            "val_def": "1"
+        },
+        {
+            "nume": "Galerie adversa rasunatoare!",
+            "desc": "Jucatorii adversi sunt demoralizati, rezultand in in -2/-2 la punctele fiecaruia.",
+            "tip": "7",
+            "pos": "0",
+            "argument": "0",
+            "val_atk": "2",
+            "val_def": "2"
+        },
+        {
+            "nume": "Tzeapa la francezi!",
+            "desc": "Jucatorii adversi de nationalite franceza sunt demoralizati, rezultand in in -4/-3 la punctele fiecaruia.",
+            "tip": "8",
+            "pos": "0",
+            "argument": "France",
+            "val_atk": "4",
+            "val_def": "3"
+        },
+        {
+            "nume": "It's coming home!",
+            "desc": "Jucatorii adversi de nationalite engleza sunt demoralizati, rezultand in in -3/-4 la punctele fiecaruia.",
+            "tip": "8",
+            "pos": "0",
+            "argument": "England",
+            "val_atk": "3",
+            "val_def": "4"
+        },
+        {
+            "nume": "Haida ca se poate!",
+            "desc": "Jucatorii de pe linia selectata se simt motivati, rezultand in +3/+2 la punctele fiecaruia.",
+            "tip": "9",
+            "pos": "0",
+            "argument": "0",
+            "val_atk": "3",
+            "val_def": "2"
+        },
+        {
+            "nume": "Treceti la atac!",
+            "desc": "Jucatorii de pe linia selectata se simt motivati, rezultand in +5/+0 la punctele fiecaruia.",
+            "tip": "9",
+            "pos": "0",
+            "argument": "0",
+            "val_atk": "5",
+            "val_def": "0"
+        },
+        {
+            "nume": "Deutschland über Alles!",
+            "desc": "Toti jucatorii germani se simt motivati, rezultand in +3/+2 la punctele fiecaruia.",
+            "tip": "2",
+            "pos": "0",
+            "argument": "Germany",
+            "val_atk": "3",
+            "val_def": "2"
+        },
+        {
+            "nume": "Bayern über Alles!",
+            "desc": "Toti jucatorii de la Bayern Munich se simt motivati, rezultand in +4/+3 la punctele fiecaruia.",
+            "tip": "3",
+            "pos": "0",
+            "argument": "Bayern Munich",
+            "val_atk": "4",
+            "val_def": "3"
+        },
+        {
+            "nume": "Viva España!",
+            "desc": "Toti jucatorii spanioli se simt motivati, rezultand in +5/+0 la punctele fiecaruia.",
+            "tip": "2",
+            "pos": "0",
+            "argument": "Spain",
+            "val_atk": "5",
+            "val_def": "0"
+        },
+        {
+            "nume": "Viva Real Madrid!",
+            "desc": "Toti jucatorii de la Real Madrid se simt motivati, rezultand in +4/+4 la punctele fiecaruia.",
+            "tip": "3",
+            "pos": "0",
+            "argument": "Real Madrid",
+            "val_atk": "4",
+            "val_def": "4"
+        },
+        {
+            "nume": "Viva Atlético Madrid!",
+            "desc": "Toti jucatorii de la Atlético Madrid se simt motivati, rezultand in +3/+5 la punctele fiecaruia.",
+            "tip": "3",
+            "pos": "0",
+            "argument": "Atlético Madrid",
+            "val_atk": "3",
+            "val_def": "5"
         }
     ],
     "coach": [
