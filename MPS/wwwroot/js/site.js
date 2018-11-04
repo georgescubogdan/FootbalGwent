@@ -288,7 +288,7 @@ let receivedLeaders = [
         description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. In soluta repudiandae odio, provident quod hic harum delectus, sunt voluptatem architecto atque, expedita labore alias sequi."
     }
 ]
-
+let pass = false;
 const game = {
     playersToSelect: 11,
     functionalitiesToSelect: 5,
@@ -412,10 +412,10 @@ const game = {
         let newScore = 0;
         if ((this.cardToPut
                 && players.find(p => p.id === player.id).turn === true
-                && players.find(p => p.id === player.id).pass === false)
+                && players.find(p => p.id === player.id).pass === false && pass === false)
             || (this.cardToPut
                 && players.find(p => p.id === player.id).opponentPass === true
-                && players.find(p => p.id === player.id).pass === false)) {
+                && players.find(p => p.id === player.id).pass === false && pass === false)) {
             cardsPlace.appendChild(this.cardToPut);
             this.cardToPut.onclick = () => this.showClickedCard(this.cardToPut);
             player.cards = this.sendCardsFromField();
@@ -825,6 +825,7 @@ const game = {
     //TODO implement pass button logic
     pressPass(player) {
         player.pass = true;
+        pass = true;
     },
 
     getMyTotalSum() {
@@ -835,6 +836,17 @@ const game = {
             Number(this.myDefenseLineScore.innerHTML) +
             Number(this.myGoalkeeperLineScore.innerHTML);
         return sum;
+    },
+
+    resetLineScores() {
+        this.myAttackLineScore.innerHTML = 0;
+        this.myMiddleLineScore.innerHTML = 0;
+        this.myDefenseLineScore.innerHTML = 0;
+        this.myGoalkeeperLineScore.innerHTML = 0;
+        this.enemyAttackLineScore.innerHTML = 0;
+        this.enemyMiddleLineScore.innerHTML = 0;
+        this.enemyDefenseLineScore.innerHTML = 0;
+        this.enemyGoalkeeperLineScore.innerHTML = 0;
     },
 
     getEnemyTotalSum() {
@@ -868,7 +880,7 @@ window.onload = function () {
     game.passBtn.onclick = () => game.pressPass(player);
 
     //Connection section
-    connection = new WebSocketManager.Connection("ws://localhost:5000/server");
+    connection = new WebSocketManager.Connection("ws://192.168.1.132:5000/server");
 
     connection.connectionMethods.onConnected = () => {
         player.id = connection.connectionId;
@@ -896,24 +908,52 @@ window.onload = function () {
 
     //TODO: create update function that notifies the server of the client changes
     // this function gets called every .5 seconds
-    setInterval(update, 1000);
+    setInterval(update, 500);
 }
 
 function checkRoundOrMatchFinish() {
     let passCount = 0;
     players.forEach(p => {
-        passCount += p.pass ? 0 : 1;
+        if (!!p.pass == true) {
+            passCount++;
+        }
     });
-    if (passCount === 2) {
-        //TODO suma scoruri pentru ambii jucatori
-        //TODO in functie de suma sa se adauge +1 la scorul jucatorului invingator
-        //TODO increment la roundCount in ambii jucatori
-        if (player.roundCount === 3) {
-            //TODO compara player.score la ambii jucatori
-            //TODO sa se afiseze la ambii jucatori un alert cu cel care a castigat meciul
+    if (passCount === 2 && !player.matchFinish && pass === true) {
+        //suma scoruri pentru ambii jucatori
+        var mySum = game.getMyTotalSum();
+        var enemySum = game.getEnemyTotalSum();
+        //in functie de suma se adauga +1 la scorul jucatorului invingator
+        if (mySum > enemySum) {
+            player.score++;
+        } else if (mySum == enemySum) {
+            player.score++;
+            players.find(p => p.id !== player.id).score++;
         } else {
+            players.find(p => p.id !== player.id).score++;
+        }
+        if (player.score === 2) {
+            alert("You won the match, bro!");
+            player.matchFinish = true;
+        } else if (players.find(p => p.id !== player.id).score === 2) {
+            alert("You lost the match, bro!");
+            player.matchFinish = true;
+        } else {
+            if (mySum > enemySum) {
+                alert("You won this round, bro!");
+                player.turn = true;
+            } else if (mySum == enemySum) {
+                alert("You equaled this round, bro!");
+            } else {
+                alert("You lost this round, bro!");
+                player.turn = false;
+            }
             //TODO sa se curete boardul si sa se elimine cartile
-            //TODO sa se afiseze la ambii jucatori un alert cu cel care a castigat runda
+            player.cards = [];
+            player.pass = false;
+            pass = false;
+            player.opponentPass = false;
+            update();
+            game.resetLineScores()
         }
         
     }
@@ -921,11 +961,12 @@ function checkRoundOrMatchFinish() {
 //TODO change this function to permit other player updates
 // ConnectionId -> otherPlayer.id; player -> otherPlayer
 function update() {
-    player.cards = game.sendCardsFromField();
+
+    //player.cards = game.sendCardsFromField();
     //if (connection.socket.readyState == 1) {
     //    connection.invoke("Update", connection.connectionId, JSON.stringify(player));
     //}
-
+    checkRoundOrMatchFinish();
     const myTotalScore = game.getMyTotalSum();
     const enemyTotalScore = game.getEnemyTotalSum();
     console.log("MY SCORE " + myTotalScore);
@@ -941,7 +982,9 @@ function update() {
             p.pass = player.pass;
             p.opponentPass = player.opponentPass;
             let other = players.find(p => p.id !== player.id);
-            p.opCards = (other)?other.cards : [];
+            p.opCards = (other) ? other.cards : [];
+            p.score = player.score;
+
             //TODO and other update stuff
             if (connection.socket.readyState == 1) {
                 connection.invoke("Update", p.id, JSON.stringify(p));
@@ -962,6 +1005,7 @@ function Player() {
     this.opponentPass = false;
     this.roundCount = 0;
     this.score = 0;
+    this.matchFinish = false;
 }
 function Card() {
     this.image = "";

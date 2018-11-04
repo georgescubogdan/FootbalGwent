@@ -34,7 +34,7 @@ namespace MPS
         {
             _playerHandler = playerHandler;
             Players = new ConcurrentDictionary<string, Player>();
-            Timer = new Timer(Callback, null, 0, 500);
+            Timer = new Timer(Callback, null, 0, 50);
         }
 
         private void Callback(object state)
