@@ -1024,19 +1024,25 @@ function checkRoundOrMatchFinish() {
             players.find(p => p.id !== player.id).score++;
         }
         if (player.score === 2) {
-            alert("You won the match, bro!");
+            setWinner("You, bro!");
+            //alert("You won the match, bro!");
             player.matchFinish = true;
         } else if (players.find(p => p.id !== player.id).score === 2) {
-            alert("You lost the match, bro!");
+            setWinner("Not you, bro!");
+            //alert("You lost the match, bro!");
             player.matchFinish = true;
         } else {
             if (mySum > enemySum) {
-                alert("You won this round, bro!");
+                game.incrementMyRoundsWon();
+                //alert("You won this round, bro!");
                 player.turn = true;
             } else if (mySum == enemySum) {
-                alert("You equaled this round, bro!");
+                game.incrementMyRoundsWon();
+                game.incrementEnemiesRoundsWon();
+               // alert("You equaled this round, bro!");
             } else {
-                alert("You lost this round, bro!");
+                //alert("You lost this round, bro!");
+                game.incrementEnemiesRoundsWon();
                 player.turn = false;
             }
             //TODO sa se curete boardul si sa se elimine cartile
@@ -1064,6 +1070,11 @@ function update() {
     const enemyTotalScore = game.getEnemyTotalSum();
     game.setEnemiesCurrentScore();
     game.setMyCurrentScore();
+    let totalScore = 0;
+    players.forEach(p => {
+        totalScore += p.score;
+    });
+    game.setRound(totalScore + 1);
     console.log("MY SCORE " + myTotalScore);
     console.log("ENEMY SCORE " + enemyTotalScore);
 
@@ -1074,6 +1085,8 @@ function update() {
            // p.score = player.score;
            // p.roundCount = player.roundCount;
            // p.turn = player.turn;
+            game.setTurn(p.turn === true ? "my" : "");
+
             p.pass = player.pass;
             p.opponentPass = player.opponentPass;
             let other = players.find(p => p.id !== player.id);
