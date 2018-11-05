@@ -151,7 +151,7 @@ const game = {
                 cardsPlace.style.justifyContent = "flex-start";
             }
             this.updateTurn();
-        } else if (players.find(p => p.id === player.id).pass === true) {
+        } else if (players.find(p => p.id === player.id).pass === true && pass === true) {
             alert("You passed bro! Wait for the other to finish!");
         } else {
             console.log(players);
@@ -254,7 +254,7 @@ const game = {
         players.innerHTML = "";
         arr.forEach(item => {
             players.innerHTML += `
-      <div class="card player">
+      <div class="card player tip${item.tip}">
         <div class="photo">
           <img src=${item.image} alt="player photo">
         </div>
@@ -398,7 +398,7 @@ const game = {
         const player = document.createElement("div");
         player.classList.add("card", "player");
         player.innerHTML = `
-        <div class="photo">
+        <div class="photo tip${obj.tip}">
           <img src=${obj.image} alt="player photo">
         </div>
         <div class="information">
@@ -750,7 +750,7 @@ window.onload = function () {
     // this function gets called every .5 seconds
     setInterval(update, 500);
 }
-
+var opScore = 0;
 function checkRoundOrMatchFinish() {
     let passCount = 0;
     players.forEach(p => {
@@ -768,14 +768,17 @@ function checkRoundOrMatchFinish() {
         } else if (mySum == enemySum) {
             player.score++;
             players.find(p => p.id !== player.id).score++;
+            opScore++;
         } else {
             players.find(p => p.id !== player.id).score++;
+            opScore++;
+
         }
         if (player.score === 2) {
             game.setWinner("You, bro!");
             //alert("You won the match, bro!");
             player.matchFinish = true;
-        } else if (players.find(p => p.id !== player.id).score === 2) {
+        } else if (opScore === 2) {//(players.find(p => p.id !== player.id).score === 2) {
             game.setWinner("Not you, bro!");
             //alert("You lost the match, bro!");
             player.matchFinish = true;
@@ -819,10 +822,17 @@ function update() {
     game.setEnemiesCurrentScore();
     game.setMyCurrentScore();
     let totalScore = 0;
-    players.forEach(p => {
-        totalScore += p.score;
-    });
-    game.setRound(totalScore + 1);
+    //players.forEach(p => {
+    //    totalScore += p.score;
+    //});
+    totalScore = player.score + opScore;
+    if (totalScore < 2) {
+        game.setRound(totalScore + 1);
+    } else if (totalScore === 2) {
+        game.setRound("Final");
+    } else {
+        game.setRound("Match finished");
+    }
     console.log("MY SCORE " + myTotalScore);
     console.log("ENEMY SCORE " + enemyTotalScore);
 
@@ -830,7 +840,7 @@ function update() {
         if (p.id == player.id) {
             p.cards = player.cards;
             p.coach = player.coach;
-           // p.score = player.score;
+            p.score = player.score;
            // p.roundCount = player.roundCount;
            // p.turn = player.turn;
             game.setTurn(p.turn === true ? "my" : "");

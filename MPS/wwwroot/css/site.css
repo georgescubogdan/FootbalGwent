@@ -104,6 +104,10 @@ h2 {
     max-width: 100%;
 }
 
+.player .tip {
+    display: none;
+}
+
 .player .information,
 .functionality .information,
 .leader .information {
@@ -116,6 +120,7 @@ h2 {
 .functionality .photo img,
 .leader .photo img {
     max-width: 100%;
+    max-height: 100%;
 }
 
 .player .name,
@@ -362,4 +367,20 @@ h2 {
 .field .me .line-score {
     background-color: white;
     color: black;
+}
+
+.player.tip0 {
+    border: 3px solid #ffd400;
+}
+
+.player.tip1 {
+    border: 3px solid #1b00ff;
+}
+
+.player.tip2 {
+    border: 3px solid #0cc300;
+}
+
+.player.tip3 {
+    border: 3px solid #dc3d00;
 }
