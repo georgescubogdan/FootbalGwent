@@ -6,6 +6,9 @@ let receivedPlayers = []
 let receivedFunctionalities = []
 let receivedLeaders = []
 let pass = false;
+var player;
+var players = [];
+
 const game = {
     playersToSelect: 11,
     functionalitiesToSelect: 5,
@@ -383,8 +386,10 @@ const game = {
         p.image = div.querySelector(".photo img").src;
         p.name = div.querySelector(".name").innerHTML;
         p.description = div.querySelector(".description").innerHTML;
-        p.tip = 0;
+        p.tip = 1;
         p.pos = pos;
+
+        applyPower(p);
 
         return p;
     },
@@ -668,8 +673,7 @@ const game = {
         }
     }
 }
-var player;
-var players = [];
+
 window.onload = function () {
     player = new Player();
     //Card randomize section
@@ -678,10 +682,10 @@ window.onload = function () {
         let id = Math.floor(Math.random() * date.carte.length);
         let newCard = date.carte[id];
 
-        
         while (cards.filter(c => c.name === newCard.name).length > 0) 
         {
-            newCard = date.carte[Math.floor(Math.random() * date.carte.length)];
+            id = Math.floor(Math.random() * date.carte.length);
+            newCard = date.carte[id];
         }
         
         newCard.image = "../images/jucatori_poze/" + (id+1) + "_jucator.jpg";
@@ -693,6 +697,7 @@ window.onload = function () {
     for (let i = 0; i < 10; i++) {
         let id = Math.floor(Math.random() * date.power.length);
         let newCard = date.power[id];
+
         while (cards.filter(c => c.name === newCard.name).length > 0) {
             newCard = date.power[Math.floor(Math.random() * date.power.length)];
         }
@@ -903,7 +908,13 @@ function keyPush(evt) {
     }
 }
 
-function applyPower(players, power) {
+function applyPower(power) {
+    player.cards.forEach(c => {
+        if (c.pos === 4) {
+            c.attack += 3;
+        }
+    });
+    /*
     // EXEMPLE
     //Pentru playerul care nu suntem noi se lucreaza cu players.forEach
     if (power.tip === -2) {
@@ -1027,6 +1038,7 @@ function applyPower(players, power) {
                 }
             });
     }
+    */
 }
 
 var date = {
@@ -1904,15 +1916,6 @@ var date = {
     "coach": [
         {
             "image": "../images/antrenori_poze/1_antrenor.jpg",
-            "name": "hagi",
-            "passive": "0",
-            "descpassive": "ai n-ai mingea dai la poarta",
-            "active": "0",
-            "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. In soluta repudiandae odio, provident quod hic harum delectus, sunt voluptatem architecto atque, expedita labore alias sequi.",
-            "descactive": "autogol"
-        },
-        {
-            "image": "../images/antrenori_poze/1_antrenor.jpg",
             "name": "Gheorghe Hagi",
             "passive": "0",
             "descpassive": "Pasiva: Ai, n-ai mingea, tragi la poarta! --> fiecare jucator primeste +3/-1 la punctele sale.",
@@ -1921,7 +1924,7 @@ var date = {
             "descactive": "Activa: Poti sa te ascunzi, dar nu te poti ascunde! --> fiecare jucator advers primeste -2/-2 la punctele sale."
         },
         {
-            "image": "../images/antrenori_poze/1_antrenor.jpg",
+            "image": "../images/antrenori_poze/2_antrenor.jpg",
             "name": "Gareth Southgate",
             "passive": "1",
             "descpassive": "Pasiva: Stand as one! --> fiecare jucator englez primeste +2/+2 la punctele sale.",
@@ -1930,8 +1933,8 @@ var date = {
             "descactive": "Activa: We can do this! --> fiecare jucator englez primeste +4/+4 la punctele sale."
         },
         {
-            "image": "../images/antrenori_poze/1_antrenor.jpg",
-            "name": "Didier descriptionhamps",
+            "image": "../images/antrenori_poze/3_antrenor.jpg",
+            "name": "Didier Dechamps",
             "passive": "2",
             "descpassive": "Pasiva: Al� al� al�! --> fiecare jucator francez primeste +3/+1 la punctele sale.",
             "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. In soluta repudiandae odio, provident quod hic harum delectus, sunt voluptatem architecto atque, expedita labore alias sequi.",
@@ -1939,8 +1942,8 @@ var date = {
             "descactive": "Activa: Qu�est-ce que vous avez pr�par� pour aujourd�hui? --> fiecare jucator advers primeste -3/-1 la punctele sale."
         },
         {
-            "image": "../images/antrenori_poze/1_antrenor.jpg",
-            "name": "Joachim L�w",
+            "image": "../images/antrenori_poze/4_antrenor.jpg",
+            "name": "Joachim Low",
             "passive": "3",
             "descpassive": "Pasiva: Blitzkrieg! --> fiecare jucator german primeste +5/+0 la punctele sale.",
             "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. In soluta repudiandae odio, provident quod hic harum delectus, sunt voluptatem architecto atque, expedita labore alias sequi.",
@@ -1948,7 +1951,7 @@ var date = {
             "descactive": "Activa: Was ist das? *mana in pantaloni* --> fiecare jucator advers primeste -3/-3 la punctele sale."
         },
         {
-            "image": "../images/antrenori_poze/1_antrenor.jpg",
+            "image": "../images/antrenori_poze/5_antrenor.jpg",
             "name": "Luis Enrique",
             "passive": "4",
             "descpassive": "Pasiva: Yo soy loca con mi tigre! --> fiecare jucator spaniol primeste +4/+1 la punctele sale.",
