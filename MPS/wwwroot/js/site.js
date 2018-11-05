@@ -251,7 +251,7 @@ const game = {
         players.innerHTML = "";
         arr.forEach(item => {
             players.innerHTML += `
-      <div class="card player">
+      <div class="card player tip${item.tip}">
         <div class="photo">
           <img src=${item.image} alt="player photo">
         </div>
@@ -393,7 +393,7 @@ const game = {
         const player = document.createElement("div");
         player.classList.add("card", "player");
         player.innerHTML = `
-        <div class="photo">
+        <div class="photo tip${obj.tip}">
           <img src=${obj.image} alt="player photo">
         </div>
         <div class="information">
