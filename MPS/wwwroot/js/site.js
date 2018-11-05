@@ -148,7 +148,7 @@ const game = {
                 cardsPlace.style.justifyContent = "flex-start";
             }
             this.updateTurn();
-        } else if (players.find(p => p.id === player.id).pass === true) {
+        } else if (players.find(p => p.id === player.id).pass === true && pass === true) {
             alert("You passed bro! Wait for the other to finish!");
         } else {
             console.log(players);
@@ -583,7 +583,7 @@ const game = {
 
     //TODO implement pass button logic
     pressPass(player) {
-        this.setEnemyPassed(false);
+       // this.setEnemyPassed(false);
         player.pass = true;
         pass = true;
     },
