@@ -745,8 +745,12 @@ window.onload = function () {
     // this function gets called every .5 seconds
     setInterval(update, 500);
 }
+
+async function sleep(msec) {
+    return new Promise(resolve => setTimeout(resolve, msec));
+}
 var opScore = 0;
-function checkRoundOrMatchFinish() {
+async function checkRoundOrMatchFinish() {
     let passCount = 0;
     players.forEach(p => {
         if (!!p.pass == true) {
@@ -754,6 +758,7 @@ function checkRoundOrMatchFinish() {
         }
     });
     if (passCount === 2 && !player.matchFinish && pass === true) {
+        await sleep(400);
         //suma scoruri pentru ambii jucatori
         var mySum = game.getMyTotalSum();
         var enemySum = game.getEnemyTotalSum();
