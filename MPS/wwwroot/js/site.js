@@ -1221,8 +1221,7 @@ function applyPower(players, power) {
                 c.attack += 3;
             }
         });
-    } 
-    
+    }
 
     // 2 - BUFF TOTI JUCATORII DE PE TEREN APARTINAND ACELEASI TARI
     if (power.tip === 2) {
@@ -1306,6 +1305,7 @@ function applyPower(players, power) {
             });
     }
 }
+
 var date = {
     "carte": [
         {
