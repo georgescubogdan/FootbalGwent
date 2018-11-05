@@ -583,7 +583,7 @@ const game = {
 
     //TODO implement pass button logic
     pressPass(player) {
-       // this.setEnemyPassed(false);
+        this.setEnemyPassed(false);
         player.pass = true;
         pass = true;
     },
@@ -745,7 +745,7 @@ window.onload = function () {
     // this function gets called every .5 seconds
     setInterval(update, 500);
 }
-
+var opScore = 0;
 function checkRoundOrMatchFinish() {
     let passCount = 0;
     players.forEach(p => {
@@ -763,14 +763,17 @@ function checkRoundOrMatchFinish() {
         } else if (mySum == enemySum) {
             player.score++;
             players.find(p => p.id !== player.id).score++;
+            opScore++;
         } else {
             players.find(p => p.id !== player.id).score++;
+            opScore++;
+
         }
         if (player.score === 2) {
             game.setWinner("You, bro!");
             //alert("You won the match, bro!");
             player.matchFinish = true;
-        } else if (players.find(p => p.id !== player.id).score === 2) {
+        } else if (opScore === 2) {//(players.find(p => p.id !== player.id).score === 2) {
             game.setWinner("Not you, bro!");
             //alert("You lost the match, bro!");
             player.matchFinish = true;
@@ -814,10 +817,17 @@ function update() {
     game.setEnemiesCurrentScore();
     game.setMyCurrentScore();
     let totalScore = 0;
-    players.forEach(p => {
-        totalScore += p.score;
-    });
-    game.setRound(totalScore + 1);
+    //players.forEach(p => {
+    //    totalScore += p.score;
+    //});
+    totalScore = player.score + opScore;
+    if (totalScore < 2) {
+        game.setRound(totalScore + 1);
+    } else if (totalScore === 2) {
+        game.setRound("Final");
+    } else {
+        game.setRound("Match finished");
+    }
     console.log("MY SCORE " + myTotalScore);
     console.log("ENEMY SCORE " + enemyTotalScore);
 
@@ -825,7 +835,7 @@ function update() {
         if (p.id == player.id) {
             p.cards = player.cards;
             p.coach = player.coach;
-           // p.score = player.score;
+            p.score = player.score;
            // p.roundCount = player.roundCount;
            // p.turn = player.turn;
             game.setTurn(p.turn === true ? "my" : "");
