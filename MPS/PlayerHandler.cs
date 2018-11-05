@@ -45,7 +45,7 @@ namespace MPS
                 //TODO: Update logic
                 exists.turn = player.turn;
                 exists.pass = player.pass;
-                exists.opponentPass = player.opponentPass;
+                //exists.opponentPass = player.opponentPass;
                 exists.cards = player.cards;
                 exists.coach = player.coach;
                 exists.powers = player.powers;
